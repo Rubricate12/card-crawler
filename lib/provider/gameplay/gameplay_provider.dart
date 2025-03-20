@@ -86,6 +86,7 @@ class GameplayProvider extends ChangeNotifier {
   }
 
   void action(GameplayAction action) {
+
     switch (action) {
       case SelectCardFromField0(card: var card, index: var index):
         {
@@ -200,6 +201,7 @@ class GameplayProvider extends ChangeNotifier {
         int index = _field0.indexOf(null);
         if (index != -1) _field0[index] = deck.removeLast();
       }
+
     }
 
     /*if (AchievementChecker.fourOfAKind(field0)) {
