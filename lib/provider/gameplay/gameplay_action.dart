@@ -2,11 +2,17 @@ import '../../model/game_card.dart';
 
 sealed class GameplayAction {}
 
-class SelectCardFromField0 extends GameplayAction {
-  SelectCardFromField0({required this.card, required this.index});
+class SelectCardFromDungeonField extends GameplayAction {
+  SelectCardFromDungeonField({required this.card, required this.index});
 
   final GameCard card;
   final int index;
+}
+
+class SelectCardFromAccessories extends GameplayAction {
+  SelectCardFromAccessories(this.card);
+
+  final GameCard card;
 }
 
 class Flee extends GameplayAction {}

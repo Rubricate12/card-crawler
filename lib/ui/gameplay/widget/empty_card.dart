@@ -1,3 +1,5 @@
+import 'package:card_crawler/ui/constant/game_card_aspect_ratio.dart';
+import 'package:card_crawler/ui/util/ui_scale.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -6,11 +8,19 @@ class EmptyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DottedBorder(
-      color: Colors.black,
-      borderType: BorderType.RRect,
-      radius: Radius.circular(12.0),
-      child: SizedBox(),
+    double uiScale = context.uiScale();
+
+    return Padding(
+      padding: EdgeInsets.all(4.0 * uiScale),
+      child: AspectRatio(
+        aspectRatio: gameCardAspectRatio,
+        child: DottedBorder(
+          color: Colors.black,
+          borderType: BorderType.RRect,
+          radius: Radius.circular(8.0),
+          child: SizedBox(),
+        ),
+      ),
     );
   }
 }

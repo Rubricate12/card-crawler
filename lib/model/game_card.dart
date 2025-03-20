@@ -6,11 +6,13 @@ class GameCard {
     required this.type,
     required this.value,
     required this.effect,
-    required this.asset,
+    required this.iconAsset,
+    required this.spriteAsset,
   });
 
   GameCardType type;
   int value;
   Effect effect;
-  String asset;
+  String iconAsset;
+  String spriteAsset;
 }

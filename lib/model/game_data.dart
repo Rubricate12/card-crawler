@@ -1,37 +1,19 @@
 import 'package:card_crawler/model/game_card.dart';
 
 class GameData {
-  GameData({
-    this.deck = const [],
-    this.dungeonField = const [],
-    this.graveyard = const [],
-    this.accessories = const [],
-    this.weapon,
-    this.pickedCard,
-    this.level = 1,
-    this.health = 20,
-    this.durability = 0,
-    this.turn = 1,
-    this.buff = 0,
-    this.multiplier = 1,
-    this.canReplaceAcc = false,
-    this.hasHealed = false,
-    this.canFlee = true
-  });
-
-  List<GameCard> deck;
-  List<GameCard> dungeonField;
-  List<GameCard> graveyard;
-  List<GameCard> accessories;
+  List<GameCard> deck = List.empty(growable: true);
+  List<GameCard?> dungeonField = List.filled(4, null);
+  List<GameCard> graveyard = List.empty(growable: true);
+  List<GameCard> accessories = List.empty(growable: true);
   GameCard? weapon;
   GameCard? pickedCard;
-  int level;
-  int health;
-  int durability;
-  int turn;
-  int buff;
-  int multiplier;
-  bool canReplaceAcc;
-  bool hasHealed;
-  bool canFlee;
+  int level = 1;
+  int health = 20;
+  int durability = 0;
+  int round = 1;
+  int buff = 0;
+  int multiplier = 1;
+  bool canReplaceAcc = false;
+  bool hasHealed = false;
+  bool canFlee = true;
 }

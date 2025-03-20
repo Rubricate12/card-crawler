@@ -1,3 +1,4 @@
+import 'package:card_crawler/ui/constant/game_card_aspect_ratio.dart';
 import 'package:card_crawler/model/user.dart';
 import 'package:card_crawler/provider/gameplay/gameplay_action.dart';
 import 'package:card_crawler/provider/gameplay/gameplay_state.dart';
@@ -8,7 +9,6 @@ import 'package:card_crawler/ui/util/ui_scale.dart';
 import 'package:card_crawler/ui/widget/menu_container.dart';
 import 'package:card_crawler/ui/widget/menu_item.dart';
 import 'package:flutter/material.dart';
-import 'package:playing_cards/playing_cards.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/game_card.dart';
@@ -79,31 +79,84 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         width: cardWidth,
                         child: Column(
                           children: [
-                            Expanded(child: SizedBox()),
-                            gameplay.deck.isNotEmpty
-                                ? GameCardView(
-                                  card: gameplay.deck.last,
-                                  onTap: () {},
-                                )
-                                : AspectRatio(
-                                  aspectRatio: playingCardAspectRatio,
-                                  child: EmptyCard(),
-                                ),
                             Expanded(
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.favorite,
-                                    size: componentWidth,
-                                    color: Color(0xFFF24822),
-                                  ),
-                                  Text(
-                                    gameplay.health.toString(),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 32.0 * uiScale,
+                              child: Center(
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 48.0 * uiScale,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(
+                                      24.0 * uiScale,
                                     ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'ROUND: ${gameplay.data.round.toString()}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 24.0 * uiScale,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            gameplay.data.deck.isNotEmpty
+                                ? AspectRatio(
+                                  aspectRatio: gameCardAspectRatio,
+                                  child: Card(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        gameplay.data.deck.length.toString(),
+                                        style: TextStyle(
+                                          fontSize: 48 * uiScale,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                : EmptyCard(),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.favorite,
+                                        size: componentWidth * 0.75,
+                                        color: Color(0xFFF24822),
+                                      ),
+                                      Text(
+                                        gameplay.data.health.toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24.0 * uiScale,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.shield,
+                                        size: componentWidth * 0.75,
+                                        color: Color(0xFF72849A),
+                                      ),
+                                      Text(
+                                        gameplay.data.durability.toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24.0 * uiScale,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -116,13 +169,49 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            gameplay.field0
-                                    .where((card) => card != null)
-                                    .isNotEmpty
-                                ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: List.generate(4, (index) {
-                                    GameCard? card = gameplay.field0[index];
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: List.generate(4, (index) {
+                                GameCard? card =
+                                    gameplay.data.dungeonField[index];
+
+                                return SizedBox(
+                                  width: cardWidth,
+                                  child:
+                                      card != null
+                                          ? GameCardView(
+                                            card: card,
+                                            onTap: () {
+                                              gameplay.action(
+                                                SelectCardFromDungeonField(
+                                                  card: card,
+                                                  index: index,
+                                                ),
+                                              );
+                                            },
+                                          )
+                                          : EmptyCard(),
+                                );
+                              }),
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: cardWidth,
+                                  child:
+                                      gameplay.data.weapon != null
+                                          ? GameCardView(
+                                            card: gameplay.data.weapon!,
+                                            onTap: () {},
+                                          )
+                                          : EmptyCard(),
+                                ),
+                                Row(
+                                  children: List.generate(3, (index) {
+                                    GameCard? card =
+                                        index < gameplay.data.accessories.length
+                                            ? gameplay.data.accessories[index]
+                                            : null;
 
                                     return SizedBox(
                                       width: cardWidth,
@@ -130,50 +219,13 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                           card != null
                                               ? GameCardView(
                                                 card: card,
-                                                onTap: () {
-                                                  gameplay.action(
-                                                    SelectCardFromField0(
-                                                      card: card,
-                                                      index: index,
-                                                    ),
-                                                  );
-                                                },
+                                                onTap: () {},
                                               )
-                                              : null,
+                                              : EmptyCard(),
                                     );
                                   }),
-                                )
-                                : SizedBox(
-                                  width: cardWidth,
-                                  child: AspectRatio(
-                                    aspectRatio: playingCardAspectRatio,
-                                    child: EmptyCard(),
-                                  ),
                                 ),
-                            SizedBox(
-                              width:
-                                  gameplay.field1.isNotEmpty
-                                      ? cardWidth * 1.25
-                                      : cardWidth,
-                              child:
-                                  gameplay.field1.isNotEmpty
-                                      ? FlatCardFan(
-                                        children: List.of(
-                                          gameplay.field1.map((card) {
-                                            return SizedBox(
-                                              width: cardWidth,
-                                              child: GameCardView(
-                                                card: card,
-                                                onTap: () {},
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      )
-                                      : AspectRatio(
-                                        aspectRatio: playingCardAspectRatio,
-                                        child: EmptyCard(),
-                                      ),
+                              ],
                             ),
                           ],
                         ),
@@ -193,20 +245,17 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                 ),
                               ),
                             ),
-                            gameplay.graveyard.isNotEmpty
+                            gameplay.data.graveyard.isNotEmpty
                                 ? GameCardView(
-                                  card: gameplay.graveyard.last,
+                                  card: gameplay.data.graveyard.last,
                                   onTap: () {},
                                 )
-                                : AspectRatio(
-                                  aspectRatio: playingCardAspectRatio,
-                                  child: EmptyCard(),
-                                ),
+                                : EmptyCard(),
                             Expanded(
                               child: Center(
                                 child: FilledButton(
                                   onPressed:
-                                      gameplay.canFlee
+                                      gameplay.data.canFlee
                                           ? () {
                                             gameplay.action(Flee());
                                             FocusScope.of(context).unfocus();

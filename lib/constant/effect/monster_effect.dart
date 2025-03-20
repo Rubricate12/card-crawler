@@ -13,11 +13,11 @@ class NoEscape extends OnField {
 }
 
 class Scaling extends OnPicked {
-  Scaling(): super('Scaling', 'This card\'s strength will increase by 1 for every turn that have been played.');
+  Scaling(): super('Scaling', 'This card\'s strength will increase by 1 for every round that have been played.');
 
   @override
   void trigger(GameData data) {
-    data.buff = data.turn;
+    data.buff = data.round;
   }
 }
 
