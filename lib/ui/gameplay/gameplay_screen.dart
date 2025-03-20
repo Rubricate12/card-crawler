@@ -1,7 +1,7 @@
 import 'package:card_crawler/model/user.dart';
 import 'package:card_crawler/provider/gameplay/gameplay_action.dart';
 import 'package:card_crawler/provider/gameplay/gameplay_state.dart';
-import 'package:card_crawler/ui/gameplay/widget/card_placeholder.dart';
+import 'package:card_crawler/ui/gameplay/widget/game_card_view.dart';
 import 'package:card_crawler/ui/gameplay/widget/dialog_scrim.dart';
 import 'package:card_crawler/ui/gameplay/widget/empty_card.dart';
 import 'package:card_crawler/ui/util/ui_scale.dart';
@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:playing_cards/playing_cards.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/game_card.dart';
 import '../../provider/gameplay/gameplay_provider.dart';
 import '../../provider/gameplay/ui_action.dart';
 import '../theme/color.dart';
@@ -80,9 +81,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           children: [
                             Expanded(child: SizedBox()),
                             gameplay.deck.isNotEmpty
-                                ? PlayingCardView(
+                                ? GameCardView(
                                   card: gameplay.deck.last,
-                                  showBack: true,
+                                  onTap: () {},
                                 )
                                 : AspectRatio(
                                   aspectRatio: playingCardAspectRatio,
@@ -121,13 +122,13 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                 ? Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: List.generate(4, (index) {
-                                    PlayingCard? card = gameplay.field0[index];
+                                    GameCard? card = gameplay.field0[index];
 
                                     return SizedBox(
                                       width: cardWidth,
                                       child:
                                           card != null
-                                              ? CardPlaceholder(
+                                              ? GameCardView(
                                                 card: card,
                                                 onTap: () {
                                                   gameplay.action(
@@ -161,8 +162,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                           gameplay.field1.map((card) {
                                             return SizedBox(
                                               width: cardWidth,
-                                              child: PlayingCardView(
+                                              child: GameCardView(
                                                 card: card,
+                                                onTap: () {},
                                               ),
                                             );
                                           }),
@@ -192,7 +194,10 @@ class _GameplayScreenState extends State<GameplayScreen> {
                               ),
                             ),
                             gameplay.graveyard.isNotEmpty
-                                ? PlayingCardView(card: gameplay.graveyard.last)
+                                ? GameCardView(
+                                  card: gameplay.graveyard.last,
+                                  onTap: () {},
+                                )
                                 : AspectRatio(
                                   aspectRatio: playingCardAspectRatio,
                                   child: EmptyCard(),

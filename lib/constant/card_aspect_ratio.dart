@@ -1,0 +1,1 @@
+const double cardAspectRatio = 64.0 / 89.0;

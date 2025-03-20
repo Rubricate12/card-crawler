@@ -1,6 +1,10 @@
 import 'dart:math';
 
 import 'package:card_crawler/constant/achievement.dart';
+import 'package:card_crawler/constant/effect/effect.dart';
+import 'package:card_crawler/constant/game_card_type.dart';
+import 'package:card_crawler/model/game_card.dart';
+import 'package:card_crawler/model/game_data.dart';
 import 'package:card_crawler/model/user.dart';
 import 'package:card_crawler/provider/gameplay/achievement_checker.dart';
 import 'package:card_crawler/provider/gameplay/gameplay_state.dart';
@@ -9,6 +13,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:playing_cards/playing_cards.dart';
 
 import 'gameplay_action.dart';
+
+class Test extends Effect {
+  Test() : super('Tes', '');
+
+  @override
+  void trigger(GameData data) {
+  }
+}
 
 class GameplayProvider extends ChangeNotifier {
   User _user = User();
@@ -27,17 +39,17 @@ class GameplayProvider extends ChangeNotifier {
   int _durability = 0;
   bool _hasHealed = false;
 
-  final List<PlayingCard> _deck = List.empty(growable: true);
-  List<PlayingCard> get deck => _deck;
+  final List<GameCard> _deck = List.empty(growable: true);
+  List<GameCard> get deck => _deck;
 
-  final List<PlayingCard?> _field0 = List.filled(4, null);
-  List<PlayingCard?> get field0 => _field0;
+  final List<GameCard?> _field0 = List.filled(4, null);
+  List<GameCard?> get field0 => _field0;
 
-  final List<PlayingCard> _field1 = List.empty(growable: true);
-  List<PlayingCard> get field1 => _field1;
+  final List<GameCard> _field1 = List.empty(growable: true);
+  List<GameCard> get field1 => _field1;
 
-  final List<PlayingCard> _graveyard = List.empty(growable: true);
-  List<PlayingCard> get graveyard => _graveyard;
+  final List<GameCard> _graveyard = List.empty(growable: true);
+  List<GameCard> get graveyard => _graveyard;
 
   bool _canFlee = true;
   bool get canFlee => _canFlee;
@@ -56,7 +68,9 @@ class GameplayProvider extends ChangeNotifier {
     _hasHealed = false;
 
     _deck.clear();
-    _deck.addAll(standardFiftyTwoCardDeck());
+    for (int i = 0; i < 9; i++) {
+      _deck.add(GameCard(type: GameCardType.monster, value: 10, effect: Test(), asset: ''));
+    }
     _deck.shuffle(Random());
 
     _clearField0();
@@ -75,6 +89,7 @@ class GameplayProvider extends ChangeNotifier {
     switch (action) {
       case SelectCardFromField0(card: var card, index: var index):
         {
+          /*
           var suit = card.suit;
           var value = card.value.index + 2;
 
@@ -150,9 +165,11 @@ class GameplayProvider extends ChangeNotifier {
           }
 
           _checkWin();
+           */
         }
       case Flee():
         {
+          /*
           List<PlayingCard> fledCard = List.empty(growable: true);
           for (var field0Card in _field0) {
             if (field0Card != null) fledCard.add(field0Card);
@@ -162,6 +179,7 @@ class GameplayProvider extends ChangeNotifier {
           _deck.insertAll(0, fledCard);
           _canFlee = false;
           _refillField0();
+           */
         }
     }
 
@@ -184,9 +202,9 @@ class GameplayProvider extends ChangeNotifier {
       }
     }
 
-    if (AchievementChecker.fourOfAKind(field0)) {
+    /*if (AchievementChecker.fourOfAKind(field0)) {
       _state = AchievementUnlocked(achievement: Achievement.fourOfAKind);
-    }
+    }*/
   }
 
   void _clearField0() {

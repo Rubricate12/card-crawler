@@ -1,4 +1,4 @@
-enum CardType {
+enum GameCardType {
   weapon,
   monster,
   consumable,
