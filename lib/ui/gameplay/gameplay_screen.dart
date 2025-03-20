@@ -190,8 +190,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                 ),
                               ),
                             ),
-                            gameplay.graveyard != null
-                                ? PlayingCardView(card: gameplay.graveyard!)
+                            gameplay.graveyard.isNotEmpty
+                                ? PlayingCardView(card: gameplay.graveyard.last)
                                 : AspectRatio(
                                   aspectRatio: playingCardAspectRatio,
                                   child: EmptyCard(),
