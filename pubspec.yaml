@@ -94,3 +94,5 @@ flutter:
     - family: ConcertOne
       fonts:
         - asset: assets/fonts/ConcertOne-Regular.ttf
+  assets:
+    - assets/images/

@@ -1,3 +1,4 @@
+import 'package:card_crawler/model/user.dart';
 import 'package:card_crawler/provider/gameplay/gameplay_action.dart';
 import 'package:card_crawler/provider/gameplay/gameplay_state.dart';
 import 'package:card_crawler/ui/gameplay/widget/card_placeholder.dart';
@@ -25,7 +26,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<GameplayProvider>().init();
+    context.read<GameplayProvider>().init(user: User(), level: 1);
   }
 
   @override
@@ -225,14 +226,15 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       },
                       padding: EdgeInsets.all(16.0),
                       child: switch (gameplay.state) {
-                        AchievementUnlocked() => Text(
-                          'Achievement unlocked:',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32.0 * uiScale,
+                        AchievementUnlocked(achievement: var achievement) =>
+                          Text(
+                            'Achievement unlocked: ${achievement.name}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 32.0 * uiScale,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
                         Finished(isWin: var isWin) => Text(
                           isWin ? 'You win' : 'You lose',
                           style: TextStyle(
@@ -246,7 +248,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                             MenuItem(
                               title: 'RESTART',
                               onPressed: () {
-                                gameplay.init();
+                                gameplay.init(user: User(), level: 1);
                               },
                             ),
                             MenuItem(title: 'SAVE', onPressed: () {}),

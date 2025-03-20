@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:card_crawler/constant/achievement.dart';
+import 'package:card_crawler/model/user.dart';
+import 'package:card_crawler/provider/gameplay/achievement_checker.dart';
 import 'package:card_crawler/provider/gameplay/gameplay_state.dart';
 import 'package:card_crawler/provider/gameplay/ui_action.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,8 +11,12 @@ import 'package:playing_cards/playing_cards.dart';
 import 'gameplay_action.dart';
 
 class GameplayProvider extends ChangeNotifier {
+  User _user = User();
+
   GameplayState _state = Playing();
   GameplayState get state => _state;
+
+  int _level = 1;
 
   int _health = 20;
   int get health => _health;
@@ -29,14 +36,18 @@ class GameplayProvider extends ChangeNotifier {
   final List<PlayingCard> _field1 = List.empty(growable: true);
   List<PlayingCard> get field1 => _field1;
 
-  List<PlayingCard> _graveyard = List.empty(growable: true);
+  final List<PlayingCard> _graveyard = List.empty(growable: true);
   List<PlayingCard> get graveyard => _graveyard;
 
   bool _canFlee = true;
   bool get canFlee => _canFlee;
 
-  void init() {
+  void init({required User user, required int level}) {
+    _user = user;
+
     _state = Playing();
+
+    _level = level;
 
     _health = 20;
     _weapon = 0;
@@ -127,6 +138,10 @@ class GameplayProvider extends ChangeNotifier {
           }
           _removeCardFromField0(index);
 
+          if (AchievementChecker.nice(_weapon, _durability)) {
+            _state = AchievementUnlocked(achievement: Achievement.nice);
+          }
+
           if (_isField0Low()) {
             _refillField0();
             _turn++;
@@ -168,6 +183,10 @@ class GameplayProvider extends ChangeNotifier {
         if (index != -1) _field0[index] = deck.removeLast();
       }
     }
+
+    if (AchievementChecker.fourOfAKind(field0)) {
+      _state = AchievementUnlocked(achievement: Achievement.fourOfAKind);
+    }
   }
 
   void _clearField0() {
@@ -179,6 +198,36 @@ class GameplayProvider extends ChangeNotifier {
   void _checkWin() {
     if (_deck.isEmpty && _field0.every((card) => card == null) && _health > 0) {
       _state = Finished(isWin: true);
+      if (AchievementChecker.dungeonCrawler(_user.level, _level)) {
+        switch (_level) {
+          case 1:
+            _state = AchievementUnlocked(
+              achievement: Achievement.dungeonCrawlerI,
+            );
+          case 2:
+            _state = AchievementUnlocked(
+              achievement: Achievement.dungeonCrawlerII,
+            );
+          case 3:
+            _state = AchievementUnlocked(
+              achievement: Achievement.dungeonCrawlerIII,
+            );
+          case 4:
+            _state = AchievementUnlocked(
+              achievement: Achievement.dungeonCrawlerIV,
+            );
+          case 5:
+            _state = AchievementUnlocked(
+              achievement: Achievement.dungeonCrawlerV,
+            );
+        }
+        _user.level++;
+      }
+      if (AchievementChecker.perfectAdventurer(_health)) {
+        _state = AchievementUnlocked(
+          achievement: Achievement.perfectAdventurer,
+        );
+      }
     } else if (_health <= 0) {
       _state = Finished(isWin: false);
     }
