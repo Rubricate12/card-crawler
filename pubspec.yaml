@@ -94,5 +94,9 @@ flutter:
       fonts:
         - asset: assets/fonts/ConcertOne-Regular.ttf
   assets:
+    - assets/backgrounds/
     - assets/card_icons/
-    - assets/card_sprites/
+    - assets/card_sprites/weapons/
+    - assets/card_sprites/monsters/
+    - assets/card_sprites/consumables/
+    - assets/card_sprites/accessories/

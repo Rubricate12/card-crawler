@@ -12,22 +12,32 @@ class MainMenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SafeArea(
-        child: Center(
-          child: MenuContainer(
-            children: [
-              MenuItem(
-                title: 'NEW GAME',
-                onPressed: () {
-                  Navigator.pushNamed(context, GameRoute.gameplay.path);
-                },
-              ),
-              MenuItem(title: 'CONTINUE', onPressed: () {}),
-              MenuItem(title: 'LEADERBOARD', onPressed: () {}),
-              MenuItem(title: 'ACHIEVEMENTS', onPressed: () {}),
-            ],
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/backgrounds/main.png',
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
+          SafeArea(
+            child: Center(
+              child: MenuContainer(
+                children: [
+                  MenuItem(
+                    title: 'NEW GAME',
+                    onPressed: () {
+                      Navigator.pushNamed(context, GameRoute.gameplay.path);
+                    },
+                  ),
+                  MenuItem(title: 'CONTINUE', onPressed: () {}),
+                  MenuItem(title: 'LEADERBOARD', onPressed: () {}),
+                  MenuItem(title: 'ACHIEVEMENTS', onPressed: () {}),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

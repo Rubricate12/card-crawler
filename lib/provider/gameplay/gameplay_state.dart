@@ -1,8 +1,15 @@
 import 'package:card_crawler/constant/achievement.dart';
+import 'package:card_crawler/model/game_card.dart';
 
 sealed class GameplayState {}
 
 class Playing extends GameplayState {}
+
+class EffectTriggered extends GameplayState {
+  EffectTriggered({required this.card});
+
+  final GameCard card;
+}
 
 class Finished extends GameplayState {
   Finished({required this.isWin});

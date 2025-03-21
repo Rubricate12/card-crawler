@@ -1,19 +1,56 @@
 import 'package:card_crawler/model/game_card.dart';
 
 class GameData {
+  GameData({
+    List<GameCard>? deck,
+    List<GameCard?>? dungeonField,
+    this.weapon,
+    List<GameCard>? accessories,
+    List<GameCard>? graveyard,
+    this.pickedCard,
+    this.level = 1,
+    this.round = 1,
+    this.health = 20,
+    this.durability = 0,
+    this.buff = 0,
+    this.multiplier = 1,
+    this.canReplaceAcc = false,
+    this.hasHealed = false,
+    this.canFlee = true,
+  }) {
+    this.deck = deck ?? List.empty(growable: true);
+    this.dungeonField = dungeonField ?? List.filled(4, null);
+    this.graveyard = graveyard ?? List.empty(growable: true);
+    this.accessories = accessories ?? List.empty(growable: true);
+  }
+
   List<GameCard> deck = List.empty(growable: true);
   List<GameCard?> dungeonField = List.filled(4, null);
-  List<GameCard> graveyard = List.empty(growable: true);
-  List<GameCard> accessories = List.empty(growable: true);
   GameCard? weapon;
+  List<GameCard> accessories = List.empty(growable: true);
+  List<GameCard> graveyard = List.empty(growable: true);
   GameCard? pickedCard;
-  int level = 1;
-  int health = 20;
-  int durability = 0;
-  int round = 1;
-  int buff = 0;
-  int multiplier = 1;
-  bool canReplaceAcc = false;
-  bool hasHealed = false;
-  bool canFlee = true;
+  int level;
+  int round;
+  int health;
+  int durability;
+  int buff;
+  int multiplier;
+  bool canReplaceAcc;
+  bool hasHealed;
+  bool canFlee;
+
+  bool isDungeonFieldLow() {
+    return dungeonField.where((card) => card != null).length == 1;
+  }
+
+  void refillDungeonField() {
+    for (int i = 0; i < dungeonField.length; i++) {
+      if (dungeonField[i] == null) {
+        if (deck.isNotEmpty) {
+          dungeonField[i] = deck.removeLast();
+        }
+      }
+    }
+  }
 }

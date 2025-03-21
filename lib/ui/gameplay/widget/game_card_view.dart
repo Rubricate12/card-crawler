@@ -13,6 +13,7 @@ class GameCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double uiScale = context.uiScale();
+    bool isSmallScreen = context.isSmallScreen();
 
     return InkWell(
       onTap: onTap,
@@ -30,44 +31,48 @@ class GameCardView extends StatelessWidget {
         aspectRatio: gameCardAspectRatio,
         child: Card(
           color: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
           margin: EdgeInsets.all(4.0 * uiScale),
           clipBehavior: Clip.antiAlias,
           child: Padding(
-            padding: EdgeInsets.all(6.0 * uiScale),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 1.0),
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              child: Stack(
-                children: [
-                  Center(child: card.spriteAsset.isNotEmpty ? Image.asset(card.spriteAsset) : Text('🧌', style: TextStyle(fontSize: 64.0 * uiScale),)),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: SizedBox(
-                      width: 36.0 * uiScale,
-                      height: 36.0 * uiScale,
-                      child: Center(child: card.iconAsset.isNotEmpty ? Image.asset(card.iconAsset) : Text('💀', style: TextStyle(fontSize: 24.0 * uiScale),)),
+            padding: EdgeInsets.all(4.0 * uiScale),
+            child: Stack(
+              children: [
+                Center(
+                  child: SizedBox(
+                    width: 64.0,
+                    child: Image.asset(card.asset),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: SizedBox(
+                    width: 40.0 * uiScale,
+                    height: 40.0 * uiScale,
+                    child: Image.asset(
+                      isSmallScreen
+                          ? card.type.assetSmall
+                          : card.type.asset,
+                      fit: BoxFit.none,
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: SizedBox(
-                      width: 36.0 * uiScale,
-                      height: 36.0 * uiScale,
-                      child: Center(
-                        child: Text(
-                          card.value.toString(),
-                          style: TextStyle(
-                            fontSize: 24.0 * uiScale,
-                          ),
-                        ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: SizedBox(
+                    width: 40.0 * uiScale,
+                    height: 40.0 * uiScale,
+                    child: Center(
+                      child: Text(
+                        card.value.toString(),
+                        style: TextStyle(fontSize: 24.0 * uiScale),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

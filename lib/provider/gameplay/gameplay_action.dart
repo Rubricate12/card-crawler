@@ -10,9 +10,10 @@ class SelectCardFromDungeonField extends GameplayAction {
 }
 
 class SelectCardFromAccessories extends GameplayAction {
-  SelectCardFromAccessories(this.card);
+  SelectCardFromAccessories({required this.card, required this.index});
 
   final GameCard card;
+  final int index;
 }
 
 class Flee extends GameplayAction {}
