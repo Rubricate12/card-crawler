@@ -40,16 +40,18 @@ class GameData {
   bool hasHealed;
   bool canFlee;
 
+  void removeCardFromDungeonField(int index) {
+    dungeonField[index] = null;
+  }
+
   bool isDungeonFieldLow() {
     return dungeonField.where((card) => card != null).length == 1;
   }
 
   void refillDungeonField() {
     for (int i = 0; i < dungeonField.length; i++) {
-      if (dungeonField[i] == null) {
-        if (deck.isNotEmpty) {
-          dungeonField[i] = deck.removeLast();
-        }
+      if (dungeonField[i] == null && deck.isNotEmpty) {
+        dungeonField[i] = deck.removeLast();
       }
     }
   }

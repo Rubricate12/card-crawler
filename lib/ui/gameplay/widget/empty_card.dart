@@ -8,10 +8,8 @@ class EmptyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double uiScale = context.uiScale();
-
     return Padding(
-      padding: EdgeInsets.all(4.0 * uiScale),
+      padding: EdgeInsets.all(4.0 * context.uiScale()),
       child: AspectRatio(
         aspectRatio: gameCardAspectRatio,
         child: DottedBorder(

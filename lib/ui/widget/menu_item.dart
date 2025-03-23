@@ -5,25 +5,23 @@ class MenuItem extends StatelessWidget {
   const MenuItem({super.key, required this.title, required this.onPressed});
 
   final String title;
-  final Function() onPressed;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    double uiScale = context.uiScale();
+    final double uiScale = context.uiScale();
 
     return SizedBox(
       width: double.infinity,
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
+          foregroundColor: Colors.black,
           overlayColor: Colors.black,
           padding: EdgeInsets.zero,
           fixedSize: Size(double.infinity, 48.0 * uiScale),
         ),
-        child: Text(
-          title,
-          style: TextStyle(color: Colors.black, fontSize: 24.0 * uiScale),
-        ),
+        child: Text(title, style: TextStyle(fontSize: 24.0 * uiScale)),
       ),
     );
   }

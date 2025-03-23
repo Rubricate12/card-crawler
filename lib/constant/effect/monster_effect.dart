@@ -113,7 +113,7 @@ class Aftermath extends OnKill{
 
   @override
   void trigger(GameData data) {
-    data.health -= (data.pickedCard!.value / 2) as int;
+    data.health -= (data.pickedCard!.value / 2).toInt();
   }
 }
 

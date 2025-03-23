@@ -11,6 +11,8 @@ class EffectTriggered extends GameplayState {
   final GameCard card;
 }
 
+class GraveyardShown extends GameplayState {}
+
 class Finished extends GameplayState {
   Finished({required this.isWin});
 

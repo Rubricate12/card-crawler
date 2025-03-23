@@ -20,21 +20,19 @@ class MainMenuScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SafeArea(
-            child: Center(
-              child: MenuContainer(
-                children: [
-                  MenuItem(
-                    title: 'NEW GAME',
-                    onPressed: () {
-                      Navigator.pushNamed(context, GameRoute.gameplay.path);
-                    },
-                  ),
-                  MenuItem(title: 'CONTINUE', onPressed: () {}),
-                  MenuItem(title: 'LEADERBOARD', onPressed: () {}),
-                  MenuItem(title: 'ACHIEVEMENTS', onPressed: () {}),
-                ],
-              ),
+          Center(
+            child: MenuContainer(
+              children: [
+                MenuItem(
+                  title: 'NEW GAME',
+                  onPressed: () {
+                    Navigator.pushNamed(context, GameRoute.gameplay.path);
+                  },
+                ),
+                MenuItem(title: 'CONTINUE', onPressed: null),
+                MenuItem(title: 'LEADERBOARD', onPressed: null),
+                MenuItem(title: 'ACHIEVEMENTS', onPressed: null),
+              ],
             ),
           ),
         ],

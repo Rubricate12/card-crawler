@@ -31,7 +31,7 @@ List<GameCard> _consumableGameCards = [
   ),
   GameCard(
     type: GameCardType.consumable,
-    value: 2,
+    value: 6,
     effect: VampireMallet(),
     asset: _spritePath('6.png'),
   ),
