@@ -47,42 +47,6 @@ List<GameCard> _consumableGameCards = [
     effect: VampireMallet(),
     asset: _spritePath('8.png'),
   ),
-  GameCard(
-    type: GameCardType.consumable,
-    value: 9,
-    effect: VampireMallet(),
-    asset: _spritePath('9.png'),
-  ),
-  GameCard(
-    type: GameCardType.consumable,
-    value: 10,
-    effect: VampireMallet(),
-    asset: _spritePath('10.png'),
-  ),
-  GameCard(
-    type: GameCardType.consumable,
-    value: 11,
-    effect: VampireMallet(),
-    asset: _spritePath('11.png'),
-  ),
-  GameCard(
-    type: GameCardType.consumable,
-    value: 12,
-    effect: VampireMallet(),
-    asset: _spritePath('12.png'),
-  ),
-  GameCard(
-    type: GameCardType.consumable,
-    value: 13,
-    effect: VampireMallet(),
-    asset: _spritePath('13.png'),
-  ),
-  GameCard(
-    type: GameCardType.consumable,
-    value: 14,
-    effect: VampireMallet(),
-    asset: _spritePath('14.png'),
-  ),
 ];
 
 List<GameCard> get consumableGameCards => _consumableGameCards.toList();

@@ -47,6 +47,18 @@ List<GameCard> _weaponGameCards = [
     effect: VampireMallet(),
     asset: _spritePath('8.png'),
   ),
+  GameCard(
+    type: GameCardType.weapon,
+    value: 9,
+    effect: VampireMallet(),
+    asset: _spritePath('9.png'),
+  ),
+  GameCard(
+    type: GameCardType.weapon,
+    value: 10,
+    effect: VampireMallet(),
+    asset: _spritePath('10.png'),
+  ),
 ];
 
 List<GameCard> get weaponGameCards => _weaponGameCards.toList();
