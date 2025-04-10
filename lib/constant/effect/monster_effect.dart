@@ -96,7 +96,7 @@ class Opportunist extends OnPicked{
 }
 
 class Mimic extends OnPicked{
-  Mimic(): super('Mimic', 'This weapon\'s power will mimic the power of your weapon.');
+  Mimic(): super('Mimic', 'This monster\'s power will mimic the power of your weapon.');
 
   @override
   void trigger(GameData data) {

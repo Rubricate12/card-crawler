@@ -11,3 +11,26 @@ class VampireMallet extends OnUse{
     data.health += 1;
   }
 }
+
+class ArtemisBow extends OnUse{
+  ArtemisBow(): super('Artemis\'s Bow', 'This weapon\'s durability will always recover to full when used');
+
+  @override
+  void trigger(GameData data){
+    data.durability = 14;
+    }
+  }
+}
+
+class WarAxe extends OnUse{
+  WarAxe(): super('War Axe', 'This weapon will deal more damage the lower it\'s durability is');
+
+  @override
+  void trigger(GameData data){
+    if (data.durability < 7 && data.durability >= 5){
+      data.buff = 3;
+    } else if (data.durability < 5){
+      data.buff = 5;
+    }
+  }
+}
