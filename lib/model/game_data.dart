@@ -55,4 +55,6 @@ class GameData {
       }
     }
   }
+
+  bool isDungeonFieldEmpty() => dungeonField.every((card) => card == null);
 }

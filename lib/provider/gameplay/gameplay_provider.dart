@@ -1,4 +1,6 @@
 import 'package:card_crawler/constant/achievement.dart';
+import 'package:card_crawler/constant/effect/effect.dart';
+import 'package:card_crawler/constant/game_card_type.dart';
 import 'package:card_crawler/constant/game_cards/accessory_game_cards.dart';
 import 'package:card_crawler/constant/game_cards/game_cards.dart';
 import 'package:card_crawler/constant/game_cards/weapon_game_cards.dart';
@@ -55,9 +57,6 @@ class GameplayProvider extends ChangeNotifier {
 
     _data = GameData(
       deck: gameCards..shuffle(),
-      weapon: weaponGameCards.last,
-      accessories: [accessoryGameCards.last],
-      graveyard: gameCards.reversed.toList(),
     )..refillDungeonField();
 
     _resetCardView();
@@ -67,29 +66,103 @@ class GameplayProvider extends ChangeNotifier {
 
   void action(GameplayAction action) {
     _resetCardView();
+    for (var card in _data.dungeonField){
+      if (card != null && card.effect is OnField){
+        card.effect.trigger(_data);
+        _queueState(EffectTriggered(card: card));
+      }
+    }
 
     switch (action) {
       case SelectCardFromDungeonField(card: var card, index: var index):
         {
           _data.pickedCard = card;
-          _queueState(EffectTriggered(card: card));
-          card.effect.trigger(_data);
-          _queueState(
-            AchievementUnlocked(achievement: Achievement.dungeonCrawlerI),
-          );
-          _queueState(
-            AchievementUnlocked(achievement: Achievement.dungeonCrawlerII),
-          );
-          _queueState(
-            AchievementUnlocked(achievement: Achievement.fourOfAKind),
-          );
-          _queueState(Finished(isWin: true));
+          _data.removeCardFromDungeonField(index);
+          if (card.effect is OnPicked){
+            card.effect.trigger(_data);
+            _queueState(EffectTriggered(card: card));
+          }
+          switch (card.type){
+            case GameCardType.consumable:{
+              if (!_data.hasHealed) {
+                if (_data.health + card.value > 20){
+                  _data.health = 20;
+                } else {
+                  _data.health += card.value;
+                  _data.hasHealed = true;
+                }
+              }
+              _data.graveyard.add(card);
+            }
+            case GameCardType.weapon:{
+              if (_data.weapon == null){
+                _data.weapon = card;
+              } else {
+                _data.graveyard.add(_data.weapon!);
+                _data.weapon = card;
+              }
+              _data.durability = 15;
+            }
+            case GameCardType.monster:{
+              card.value += _data.buff;
+              if (_data.weapon != null) {
+                _data.buff = 0;
+                card.effect.trigger(_data);
+                _queueState(EffectTriggered(card: card));
+                _data.weapon?.value += _data.buff;
+              }
+              if (_data.durability > card.value){
+                if (card.value > _data.weapon!.value){
+                  _data.health -= (card.value - _data.weapon!.value);
+                }
+                _data.durability = card.value;
+              } else {
+                _data.health -= card.value;
+              }
+              _data.graveyard.add(card);
+            }
+            case GameCardType.accessory:{
+              if (_data.accessories.length < 3){
+                _data.accessories.add(card);
+              } else {
+                _data.canReplaceAcc = true;
+              }
+            }
+          }
+
+          if (_data.health <= 0){
+            _queueState(Finished(isWin: false));
+          } else if (_data.isDungeonFieldEmpty() && _data.deck.isEmpty){
+            _queueState(Finished(isWin: true));
+          }
+          _data.buff = 0;
+
+          if (_data.isDungeonFieldLow()){
+            _data.refillDungeonField();
+            _data.round++;
+            _data.canFlee = true;
+          }
           _triggerPendingState();
         }
       case SelectCardFromAccessories(card: var card, index: var index):
-        {}
+        {
+          if (_data.canReplaceAcc){
+            _data.graveyard.add(card);
+            _data.accessories[index] = _data.pickedCard!;
+            _data.canReplaceAcc = false;
+          }
+        }
       case Flee():
-        {}
+        {
+          _data.dungeonField.shuffle();
+          for (int i = 0; i < _data.dungeonField.length; i++) {
+            var card = _data.dungeonField[i];
+            _data.dungeonField[i] = null;
+            if (card != null) _data.deck.insert(0, card);
+          }
+          _data.refillDungeonField();
+          _data.canFlee = false;
+        }
     }
 
     notifyListeners();

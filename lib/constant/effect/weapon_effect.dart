@@ -19,7 +19,6 @@ class ArtemisBow extends OnUse{
   void trigger(GameData data){
     data.durability = 14;
     }
-  }
 }
 
 class WarAxe extends OnUse{
@@ -33,4 +32,6 @@ class WarAxe extends OnUse{
       data.buff = 5;
     }
   }
+
+
 }
