@@ -104,8 +104,10 @@ class GameplayProvider extends ChangeNotifier {
               _data.durability = 15;
             }
             case GameCardType.monster:{
-              //card.effect.trigger(_data);
-              //_queueState(EffectTriggered(card: card));
+              if (card.effect is OnPicked){
+                card.effect.trigger(_data);
+                _queueState(EffectTriggered(card: card));
+              }
               card.value += _data.tempBuff;
               _data.buff = 0;
               _data.tempBuff = 0;
@@ -125,6 +127,10 @@ class GameplayProvider extends ChangeNotifier {
               }
               _data.graveyard.add(card);
               _data.weapon?.value -= _data.tempBuff;
+              if (card.effect is OnKill){
+                card.effect.trigger(_data);
+                _queueState(EffectTriggered(card: card));
+              }
             }
             case GameCardType.accessory:{
               if (_data.accessories.length < 3){
