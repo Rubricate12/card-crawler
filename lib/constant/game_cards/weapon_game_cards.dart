@@ -8,19 +8,19 @@ List<GameCard> _weaponGameCards = [
   GameCard(
     type: GameCardType.weapon,
     value: 2,
-    effect: VampireMallet(),
+    effect: WarAxe(),
     asset: _spritePath('2.png'),
   ),
   GameCard(
     type: GameCardType.weapon,
     value: 3,
-    effect: VampireMallet(),
+    effect: WarAxe(),
     asset: _spritePath('3.png'),
   ),
   GameCard(
     type: GameCardType.weapon,
     value: 4,
-    effect: VampireMallet(),
+    effect: WarAxe(),
     asset: _spritePath('4.png'),
   ),
   GameCard(
@@ -50,13 +50,13 @@ List<GameCard> _weaponGameCards = [
   GameCard(
     type: GameCardType.weapon,
     value: 9,
-    effect: VampireMallet(),
+    effect: WarAxe(),
     asset: _spritePath('9.png'),
   ),
   GameCard(
     type: GameCardType.weapon,
     value: 10,
-    effect: VampireMallet(),
+    effect: WarAxe(),
     asset: _spritePath('10.png'),
   ),
 ];

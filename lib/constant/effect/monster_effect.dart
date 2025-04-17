@@ -17,7 +17,7 @@ class Scaling extends OnPicked {
 
   @override
   void trigger(GameData data) {
-    data.buff = data.round;
+    data.tempBuff = data.round;
   }
 }
 
@@ -91,7 +91,7 @@ class Opportunist extends OnPicked{
 
   @override
   void trigger(GameData data) {
-    data.buff = 5;
+    data.tempBuff = 5;
   }
 }
 
@@ -123,6 +123,6 @@ class Vengeful extends OnPicked {
   @override
   void trigger(GameData data) {
     var firstMonster = data.graveyard.lastWhere((card) => card.type == GameCardType.monster);
-    data.buff = firstMonster.value;
+    data.tempBuff = firstMonster.value;
   }
 }

@@ -13,6 +13,7 @@ class GameData {
     this.health = 20,
     this.durability = 0,
     this.buff = 0,
+    this.tempBuff =0,
     this.multiplier = 1,
     this.canReplaceAcc = false,
     this.hasHealed = false,
@@ -35,6 +36,7 @@ class GameData {
   int health;
   int durability;
   int buff;
+  int tempBuff;
   int multiplier;
   bool canReplaceAcc;
   bool hasHealed;

@@ -26,12 +26,14 @@ class WarAxe extends OnUse{
 
   @override
   void trigger(GameData data){
-    if (data.durability < 7 && data.durability >= 5){
+    if (data.durability < 9 && data.durability >= 6){
       data.buff = 3;
-    } else if (data.durability < 5){
+    } else if (data.durability < 6){
       data.buff = 5;
     }
   }
+}
 
-
+class IchorSickle extends OnUse{
+  IchorSickle(): super('Ichor Sickle', 'This weapon will decrease the opponent ')
 }

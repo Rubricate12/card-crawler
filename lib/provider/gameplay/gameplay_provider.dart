@@ -104,12 +104,18 @@ class GameplayProvider extends ChangeNotifier {
               _data.durability = 15;
             }
             case GameCardType.monster:{
-              card.value += _data.buff;
+              //card.effect.trigger(_data);
+              //_queueState(EffectTriggered(card: card));
+              card.value += _data.tempBuff;
               if (_data.weapon != null) {
                 _data.buff = 0;
-                card.effect.trigger(_data);
-                _queueState(EffectTriggered(card: card));
+                _data.tempBuff = 0;
+                _data.weapon!.effect.trigger(_data);
+                _queueState(EffectTriggered(card: _data.weapon!));
                 _data.weapon?.value += _data.buff;
+                _data.weapon?.value += _data.tempBuff;
+                _data.buff = 0;
+                _data.tempBuff = 0;
               }
               if (_data.durability > card.value){
                 if (card.value > _data.weapon!.value){
@@ -120,6 +126,7 @@ class GameplayProvider extends ChangeNotifier {
                 _data.health -= card.value;
               }
               _data.graveyard.add(card);
+              _data.weapon?.value -= _data.tempBuff;
             }
             case GameCardType.accessory:{
               if (_data.accessories.length < 3){
