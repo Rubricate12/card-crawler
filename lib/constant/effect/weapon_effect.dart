@@ -17,7 +17,7 @@ class ArtemisBow extends OnUse{
 
   @override
   void trigger(GameData data){
-    data.durability = 14;
+    data.durability = 15;
     }
 }
 
@@ -35,5 +35,62 @@ class WarAxe extends OnUse{
 }
 
 class IchorSickle extends OnUse{
-  IchorSickle(): super('Ichor Sickle', 'This weapon will decrease the opponent ')
+  IchorSickle(): super('Ichor Sickle', 'This weapon will decrease the opponent\'s strength');
+
+  @override
+  void trigger(GameData data){
+    data.pickedCard!.value -= 3;
+  }
+}
+
+class CursedSpear extends OnUse{
+  CursedSpear(): super('Cursed Spear', 'In combat, this weapon is stronger by 5 points, but it will recharge after every use.');
+
+  @override
+  void trigger(GameData data){
+    data.tempBuff = 5;
+    if (data.cursedSpearCounter % 2 != 0){
+      data.cursedSpearDurability = data.durability;
+      data.durability = 0;
+    } else if (data.cursedSpearCounter > 1 && data.cursedSpearCounter % 2 != 0){
+      data.durability = data.cursedSpearDurability;
+    }
+  }
+}
+
+class BloodlustBlade extends OnUse{
+  BloodlustBlade(): super('Bloodlust Blade', 'This weapon will increase in power everytime it\'s used');
+
+  @override
+  void trigger(GameData data){
+    data.buff = 1;
+  }
+}
+
+class BlueStaff extends OnUse{
+  BlueStaff(): super('Blue Staff', 'Every time this weapon is used, discard a card from the deck');
+
+  @override
+  void trigger(GameData data){
+    data.graveyard.add(data.deck.removeLast());
+  }
+}
+
+class HammerOfJustice extends OnUse{
+  HammerOfJustice(): super('Hammer Of Justice', 'This weapon gets stronger for every 5 hp lost');
+
+  @override
+  void trigger(GameData data){
+    int hpLost = (20 - (data.health) / 5) as int;
+    data.tempBuff = hpLost * 2;
+  }
+}
+
+class MirrorBlade extends OnUse{
+  MirrorBlade(): super('Mirror Blade', 'This weapon will copy the strength of the monster you\'re facing, but it breaks easier');
+
+  @override
+  void trigger(GameData data){
+    data.weapon!.value = data.pickedCard!.value;
+  }
 }

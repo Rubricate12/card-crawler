@@ -15,6 +15,8 @@ class GameData {
     this.buff = 0,
     this.tempBuff =0,
     this.multiplier = 1,
+    this.cursedSpearCounter = 0,
+    this.cursedSpearDurability = 0,
     this.canReplaceAcc = false,
     this.hasHealed = false,
     this.canFlee = true,
@@ -38,6 +40,8 @@ class GameData {
   int buff;
   int tempBuff;
   int multiplier;
+  int cursedSpearCounter;
+  int cursedSpearDurability;
   bool canReplaceAcc;
   bool hasHealed;
   bool canFlee;

@@ -22,7 +22,7 @@ class Scaling extends OnPicked {
 }
 
 class Spiky extends OnPicked {
-  Spiky(): super('Poisonous', 'Fighting this monster will lose you 3 health.');
+  Spiky(): super('Spiky', 'Fighting this monster will lose you 3 health.');
 
   @override
   void trigger(GameData data) {

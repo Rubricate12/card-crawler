@@ -107,17 +107,15 @@ class GameplayProvider extends ChangeNotifier {
               //card.effect.trigger(_data);
               //_queueState(EffectTriggered(card: card));
               card.value += _data.tempBuff;
-              if (_data.weapon != null) {
-                _data.buff = 0;
-                _data.tempBuff = 0;
-                _data.weapon!.effect.trigger(_data);
-                _queueState(EffectTriggered(card: _data.weapon!));
+              _data.buff = 0;
+              _data.tempBuff = 0;
+              if (_data.durability > card.value){
+                if (_data.weapon!.effect is OnUse){
+                  _data.weapon!.effect.trigger(_data);
+                  _queueState(EffectTriggered(card: _data.weapon!));
+                }
                 _data.weapon?.value += _data.buff;
                 _data.weapon?.value += _data.tempBuff;
-                _data.buff = 0;
-                _data.tempBuff = 0;
-              }
-              if (_data.durability > card.value){
                 if (card.value > _data.weapon!.value){
                   _data.health -= (card.value - _data.weapon!.value);
                 }
@@ -143,6 +141,7 @@ class GameplayProvider extends ChangeNotifier {
             _queueState(Finished(isWin: true));
           }
           _data.buff = 0;
+          _data.tempBuff = 0;
 
           if (_data.isDungeonFieldLow()){
             _data.refillDungeonField();
