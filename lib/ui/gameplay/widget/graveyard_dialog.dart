@@ -47,7 +47,7 @@ class GraveyardDialog extends StatelessWidget {
               onTap: () {
                 onCardTap(reversedIndex);
               },
-              showEffectDetails:
+              isEffectDetailsVisible:
                   cardEffectDetailsToShow ==
                   (CardLocation.graveyard, reversedIndex),
               selectionColor: Colors.black,

@@ -1,9 +1,6 @@
-import 'package:card_crawler/constant/achievement.dart';
 import 'package:card_crawler/constant/effect/effect.dart';
 import 'package:card_crawler/constant/game_card_type.dart';
-import 'package:card_crawler/constant/game_cards/accessory_game_cards.dart';
 import 'package:card_crawler/constant/game_cards/game_cards.dart';
-import 'package:card_crawler/constant/game_cards/weapon_game_cards.dart';
 import 'package:card_crawler/model/game_card.dart';
 import 'package:card_crawler/model/game_data.dart';
 import 'package:card_crawler/model/user.dart';
@@ -32,8 +29,6 @@ class GameplayProvider extends ChangeNotifier {
   GameCard? get weapon => _data.weapon;
 
   List<GameCard> get accessories => _data.accessories;
-
-  bool get canReplaceAcc => _data.canReplaceAcc;
 
   List<GameCard> get graveyard => _data.graveyard;
 
@@ -136,7 +131,7 @@ class GameplayProvider extends ChangeNotifier {
               if (_data.accessories.length < 3){
                 _data.accessories.add(card);
               } else {
-                _data.canReplaceAcc = true;
+                _queueState(ReplacingAccessory());
               }
             }
           }
@@ -154,15 +149,12 @@ class GameplayProvider extends ChangeNotifier {
             _data.round++;
             _data.canFlee = true;
           }
-          _triggerPendingState();
         }
-      case SelectCardFromAccessories(card: var card, index: var index):
+      case ReplaceAccessory(card: var card, index: var index):
         {
-          if (_data.canReplaceAcc){
-            _data.graveyard.add(card);
-            _data.accessories[index] = _data.pickedCard!;
-            _data.canReplaceAcc = false;
-          }
+          _data.graveyard.add(card);
+          _data.accessories[index] = _data.pickedCard!;
+          _queueState(Playing());
         }
       case Flee():
         {
@@ -176,6 +168,8 @@ class GameplayProvider extends ChangeNotifier {
           _data.canFlee = false;
         }
     }
+
+    _triggerPendingState();
 
     notifyListeners();
   }

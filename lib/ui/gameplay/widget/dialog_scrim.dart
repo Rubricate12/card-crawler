@@ -8,7 +8,7 @@ class DialogScrim extends StatelessWidget {
     required this.child,
   });
 
-  final Function() onDismiss;
+  final Function()? onDismiss;
   final EdgeInsetsGeometry? margin;
   final Widget child;
 

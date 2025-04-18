@@ -9,15 +9,15 @@ class GameCardView extends StatelessWidget {
     super.key,
     required this.card,
     this.onTap,
-    this.showEffectDetails = false,
-    this.extraActionDesc,
+    this.isEffectDetailsVisible = false,
+    this.extraActionDescription,
     this.selectionColor,
   });
 
   final GameCard card;
   final Function()? onTap;
-  final bool showEffectDetails;
-  final String? extraActionDesc;
+  final bool isEffectDetailsVisible;
+  final String? extraActionDescription;
   final Color? selectionColor;
 
   @override
@@ -50,10 +50,10 @@ class GameCardView extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             child: Padding(
               padding: EdgeInsets.all(
-                (showEffectDetails ? 16.0 : 4.0) * uiScale,
+                (isEffectDetailsVisible ? 16.0 : 4.0) * uiScale,
               ),
               child:
-                  showEffectDetails
+                  isEffectDetailsVisible
                       ? Column(
                         children: [
                           Expanded(
@@ -76,11 +76,11 @@ class GameCardView extends StatelessWidget {
                               ],
                             ),
                           ),
-                          if (extraActionDesc != null)
+                          if (extraActionDescription != null)
                             Expanded(
                               flex: 1,
                               child: Text(
-                                extraActionDesc!,
+                                extraActionDescription!,
                                 style: TextStyle(fontSize: 12.0 * uiScale),
                                 textAlign: TextAlign.center,
                               ),

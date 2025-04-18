@@ -5,6 +5,8 @@ sealed class GameplayState {}
 
 class Playing extends GameplayState {}
 
+class ReplacingAccessory extends GameplayState {}
+
 class EffectTriggered extends GameplayState {
   EffectTriggered({required this.card});
 

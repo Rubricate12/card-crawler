@@ -11,6 +11,7 @@ import 'package:card_crawler/ui/gameplay/widget/empty_card.dart';
 import 'package:card_crawler/ui/gameplay/widget/graveyard_dialog.dart';
 import 'package:card_crawler/ui/gameplay/widget/main_section.dart';
 import 'package:card_crawler/ui/gameplay/widget/pause_dialog.dart';
+import 'package:card_crawler/ui/gameplay/widget/replace_accessory_dialog.dart';
 import 'package:card_crawler/ui/gameplay/widget/side_section.dart';
 import 'package:card_crawler/ui/util/ui_scale.dart';
 import 'package:flutter/material.dart';
@@ -168,7 +169,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(4, (index) {
                           final GameCard? card = gameplay.dungeonField[index];
-                          final bool showEffectDetails =
+                          final bool isEffectDetailsVisible =
                               gameplay.cardEffectDetailsToShow ==
                               (CardLocation.dungeonField, index);
 
@@ -179,7 +180,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                     ? GameCardView(
                                       card: card,
                                       onTap: () {
-                                        showEffectDetails
+                                        isEffectDetailsVisible
                                             ? gameplay.action(
                                               SelectCardFromDungeonField(
                                                 card: card,
@@ -194,8 +195,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                               ),
                                             );
                                       },
-                                      showEffectDetails: showEffectDetails,
-                                      extraActionDesc: 'TAP TO SELECT',
+                                      isEffectDetailsVisible:
+                                          isEffectDetailsVisible,
+                                      extraActionDescription: 'TAP TO SELECT',
                                     )
                                     : EmptyCard(),
                           );
@@ -217,7 +219,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                           ),
                                         );
                                       },
-                                      showEffectDetails:
+                                      isEffectDetailsVisible:
                                           gameplay.cardEffectDetailsToShow ==
                                           (CardLocation.weapon, 0),
                                     )
@@ -226,10 +228,11 @@ class _GameplayScreenState extends State<GameplayScreen> {
                           Row(
                             children: List.generate(3, (index) {
                               final GameCard? card =
-                                  index < gameplay.accessories.length
+                                  index < gameplay.accessories.length &&
+                                          gameplay.state is! ReplacingAccessory
                                       ? gameplay.accessories[index]
                                       : null;
-                              final bool showEffectDetails =
+                              final bool isEffectDetailsVisible =
                                   gameplay.cardEffectDetailsToShow ==
                                   (CardLocation.accessories, index);
 
@@ -240,27 +243,16 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                         ? GameCardView(
                                           card: card,
                                           onTap: () {
-                                            gameplay.canReplaceAcc
-                                                ? gameplay.action(
-                                                  SelectCardFromAccessories(
-                                                    card: card,
-                                                    index: index,
-                                                  ),
-                                                )
-                                                : gameplay.uiAction(
-                                                  TapCard(
-                                                    location:
-                                                        CardLocation
-                                                            .accessories,
-                                                    index: index,
-                                                  ),
-                                                );
+                                            gameplay.uiAction(
+                                              TapCard(
+                                                location:
+                                                    CardLocation.accessories,
+                                                index: index,
+                                              ),
+                                            );
                                           },
-                                          showEffectDetails: showEffectDetails,
-                                          extraActionDesc:
-                                              gameplay.canReplaceAcc
-                                                  ? 'TAP TO SELECT'
-                                                  : null,
+                                          isEffectDetailsVisible:
+                                              isEffectDetailsVisible,
                                         )
                                         : EmptyCard(),
                               );
@@ -307,13 +299,43 @@ class _GameplayScreenState extends State<GameplayScreen> {
                 ),
                 if (gameplay.state is! Playing)
                   DialogScrim(
-                    onDismiss: () {
-                      gameplay.state is Finished
-                          ? Navigator.pop(context)
-                          : gameplay.uiAction(DismissDialog());
-                    },
+                    onDismiss:
+                        gameplay.state is ReplacingAccessory
+                            ? null
+                            : () {
+                              gameplay.state is Finished
+                                  ? Navigator.pop(context)
+                                  : gameplay.uiAction(DismissDialog());
+                            },
                     margin: EdgeInsets.all(64.0 * uiScale),
                     child: switch (gameplay.state) {
+                      ReplacingAccessory() => ReplaceAccessoryDialog(
+                        accessories: gameplay.accessories,
+                        cardWidth: cardWidth,
+                        onCardTap: (index) {
+                          final bool isEffectDetailsVisible =
+                              gameplay.cardEffectDetailsToShow ==
+                              (CardLocation.accessories, index);
+
+                          if (isEffectDetailsVisible) {
+                            gameplay.action(
+                              ReplaceAccessory(
+                                card: gameplay.accessories[index],
+                                index: index,
+                              ),
+                            );
+                          } else {
+                            gameplay.uiAction(
+                              TapCard(
+                                location: CardLocation.accessories,
+                                index: index,
+                              ),
+                            );
+                          }
+                        },
+                        cardEffectDetailsToShow:
+                            gameplay.cardEffectDetailsToShow,
+                      ),
                       EffectTriggered(card: var card) => EffectTriggeredDialog(
                         card: card,
                         cardWidth: cardWidth,

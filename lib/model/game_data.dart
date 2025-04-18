@@ -17,7 +17,6 @@ class GameData {
     this.multiplier = 1,
     this.cursedSpearCounter = 0,
     this.cursedSpearDurability = 0,
-    this.canReplaceAcc = false,
     this.hasHealed = false,
     this.canFlee = true,
   }) {
@@ -42,7 +41,6 @@ class GameData {
   int multiplier;
   int cursedSpearCounter;
   int cursedSpearDurability;
-  bool canReplaceAcc;
   bool hasHealed;
   bool canFlee;
 
