@@ -11,13 +11,13 @@ class GraveyardDialog extends StatelessWidget {
     required this.cards,
     required this.cardWidth,
     required this.onCardTap,
-    required this.cardEffectDetailsToShow,
+    required this.cardWithVisibleEffectDetails,
   });
 
   final List<GameCard> cards;
   final double cardWidth;
   final Function(int) onCardTap;
-  final (CardLocation?, int) cardEffectDetailsToShow;
+  final (CardLocation?, int) cardWithVisibleEffectDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class GraveyardDialog extends StatelessWidget {
                 onCardTap(reversedIndex);
               },
               isEffectDetailsVisible:
-                  cardEffectDetailsToShow ==
+                  cardWithVisibleEffectDetails ==
                   (CardLocation.graveyard, reversedIndex),
               selectionColor: Colors.black,
             ),

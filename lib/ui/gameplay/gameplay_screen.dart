@@ -170,7 +170,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         children: List.generate(4, (index) {
                           final GameCard? card = gameplay.dungeonField[index];
                           final bool isEffectDetailsVisible =
-                              gameplay.cardEffectDetailsToShow ==
+                              gameplay.cardWithVisibleEffectDetails ==
                               (CardLocation.dungeonField, index);
 
                           return SizedBox(
@@ -220,7 +220,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                         );
                                       },
                                       isEffectDetailsVisible:
-                                          gameplay.cardEffectDetailsToShow ==
+                                          gameplay.cardWithVisibleEffectDetails ==
                                           (CardLocation.weapon, 0),
                                     )
                                     : EmptyCard(),
@@ -233,7 +233,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                       ? gameplay.accessories[index]
                                       : null;
                               final bool isEffectDetailsVisible =
-                                  gameplay.cardEffectDetailsToShow ==
+                                  gameplay.cardWithVisibleEffectDetails ==
                                   (CardLocation.accessories, index);
 
                               return SizedBox(
@@ -314,7 +314,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         cardWidth: cardWidth,
                         onCardTap: (index) {
                           final bool isEffectDetailsVisible =
-                              gameplay.cardEffectDetailsToShow ==
+                              gameplay.cardWithVisibleEffectDetails ==
                               (CardLocation.accessories, index);
 
                           if (isEffectDetailsVisible) {
@@ -333,8 +333,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                             );
                           }
                         },
-                        cardEffectDetailsToShow:
-                            gameplay.cardEffectDetailsToShow,
+                        cardWithVisibleEffectDetails:
+                            gameplay.cardWithVisibleEffectDetails,
                       ),
                       EffectTriggered(card: var card) => EffectTriggeredDialog(
                         card: card,
@@ -351,8 +351,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                             ),
                           );
                         },
-                        cardEffectDetailsToShow:
-                            gameplay.cardEffectDetailsToShow,
+                        cardWithVisibleEffectDetails:
+                            gameplay.cardWithVisibleEffectDetails,
                       ),
                       AchievementUnlocked(achievement: var achievement) =>
                         AchievementUnlockedDialog(achievement: achievement),

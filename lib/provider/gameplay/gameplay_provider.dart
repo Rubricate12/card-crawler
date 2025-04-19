@@ -32,9 +32,9 @@ class GameplayProvider extends ChangeNotifier {
 
   List<GameCard> get graveyard => _data.graveyard;
 
-  (CardLocation?, int) _cardEffectDetailsToShow = (null, -1);
+  (CardLocation?, int) _cardWithVisibleEffectDetails = (null, -1);
 
-  (CardLocation?, int) get cardEffectDetailsToShow => _cardEffectDetailsToShow;
+  (CardLocation?, int) get cardWithVisibleEffectDetails => _cardWithVisibleEffectDetails;
 
   int get round => _data.round;
 
@@ -178,9 +178,9 @@ class GameplayProvider extends ChangeNotifier {
     switch (action) {
       case TapCard(location: var location, index: var index):
         {
-          _cardEffectDetailsToShow == (location, index)
-              ? _cardEffectDetailsToShow = (null, -1)
-              : _cardEffectDetailsToShow = (location, index);
+          _cardWithVisibleEffectDetails == (location, index)
+              ? _cardWithVisibleEffectDetails = (null, -1)
+              : _cardWithVisibleEffectDetails = (location, index);
         }
       case ShowGraveyard():
         {
@@ -200,7 +200,7 @@ class GameplayProvider extends ChangeNotifier {
   }
 
   void _resetCardView() {
-    _cardEffectDetailsToShow = (null, -1);
+    _cardWithVisibleEffectDetails = (null, -1);
   }
 
   void _queueState(GameplayState state) {

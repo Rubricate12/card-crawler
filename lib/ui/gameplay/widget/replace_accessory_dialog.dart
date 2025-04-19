@@ -11,13 +11,13 @@ class ReplaceAccessoryDialog extends StatelessWidget {
     required this.accessories,
     required this.cardWidth,
     required this.onCardTap,
-    required this.cardEffectDetailsToShow,
+    required this.cardWithVisibleEffectDetails,
   });
 
   final List<GameCard> accessories;
   final double cardWidth;
   final Function(int) onCardTap;
-  final (CardLocation?, int) cardEffectDetailsToShow;
+  final (CardLocation?, int) cardWithVisibleEffectDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class ReplaceAccessoryDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: List.generate(accessories.length, (index) {
             final bool isEffectDetailsVisible =
-                cardEffectDetailsToShow == (CardLocation.accessories, index);
+                cardWithVisibleEffectDetails == (CardLocation.accessories, index);
 
             return SizedBox(
               width: cardWidth,
