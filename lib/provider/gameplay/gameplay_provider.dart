@@ -148,6 +148,7 @@ class GameplayProvider extends ChangeNotifier {
             _data.refillDungeonField();
             _data.round++;
             _data.canFlee = true;
+            _data.hasHealed = false;
           }
         }
       case ReplaceAccessory(card: var card, index: var index):
