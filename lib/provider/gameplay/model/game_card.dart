@@ -1,5 +1,6 @@
-import 'package:card_crawler/constant/game_card_type.dart';
-import 'package:card_crawler/constant/effect/effect.dart';
+import 'package:card_crawler/provider/gameplay/type/game_card_type.dart';
+
+import '../type/effect/effect.dart';
 
 class GameCard {
   GameCard({

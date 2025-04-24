@@ -1,4 +1,4 @@
-import 'package:card_crawler/ui/util/ui_scale.dart';
+import 'package:card_crawler/ui/extension/ui_scale.dart';
 import 'package:flutter/material.dart';
 
 class MenuItem extends StatelessWidget {

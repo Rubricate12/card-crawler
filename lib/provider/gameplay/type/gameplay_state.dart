@@ -1,5 +1,6 @@
-import 'package:card_crawler/constant/achievement.dart';
-import 'package:card_crawler/model/game_card.dart';
+import 'package:card_crawler/provider/gameplay/model/game_card.dart';
+
+import '../../../type/achievement.dart';
 
 sealed class GameplayState {}
 

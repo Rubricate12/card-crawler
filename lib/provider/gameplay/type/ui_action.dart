@@ -1,4 +1,4 @@
-import 'package:card_crawler/provider/gameplay/constant/card_location.dart';
+import 'package:card_crawler/provider/gameplay/type/card_location.dart';
 
 sealed class UiAction {}
 

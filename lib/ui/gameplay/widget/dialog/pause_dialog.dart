@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../widget/menu_container.dart';
-import '../../widget/menu_item.dart';
+import '../../../widget/menu_container.dart';
+import '../../../widget/menu_item.dart';
 
 class PauseDialog extends StatelessWidget {
   const PauseDialog({

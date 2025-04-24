@@ -1,9 +1,9 @@
-import 'package:card_crawler/constant/game_cards/consumable_game_cards.dart';
-import 'package:card_crawler/constant/game_cards/monster_game_cards.dart';
-import 'package:card_crawler/constant/game_cards/weapon_game_cards.dart';
-import 'package:card_crawler/model/game_card.dart';
+import 'package:card_crawler/provider/gameplay/constant/game_cards/weapon_game_cards.dart';
 
+import '../../model/game_card.dart';
 import 'accessory_game_cards.dart';
+import 'consumable_game_cards.dart';
+import 'monster_game_cards.dart';
 
 List<GameCard> _gameCards =
     List.empty(growable: true)

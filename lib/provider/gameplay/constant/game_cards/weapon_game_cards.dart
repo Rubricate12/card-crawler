@@ -1,6 +1,6 @@
+import '../../type/effect/weapon_effect.dart';
+import '../../type/game_card_type.dart';
 import '../../model/game_card.dart';
-import '../effect/weapon_effect.dart';
-import '../game_card_type.dart';
 
 String _spritePath(String fileName) => 'assets/card_sprites/weapons/$fileName';
 

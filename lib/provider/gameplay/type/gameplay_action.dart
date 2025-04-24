@@ -1,4 +1,4 @@
-import '../../model/game_card.dart';
+import '../model/game_card.dart';
 
 sealed class GameplayAction {}
 

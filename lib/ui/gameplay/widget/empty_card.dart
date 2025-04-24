@@ -1,5 +1,5 @@
 import 'package:card_crawler/ui/constant/game_card_aspect_ratio.dart';
-import 'package:card_crawler/ui/util/ui_scale.dart';
+import 'package:card_crawler/ui/extension/ui_scale.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 

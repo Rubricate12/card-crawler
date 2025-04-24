@@ -1,4 +1,4 @@
-import 'package:card_crawler/ui/constant/game_route.dart';
+import 'package:card_crawler/ui/type/game_route.dart';
 import 'package:card_crawler/ui/gameplay/gameplay_screen.dart';
 import 'package:card_crawler/ui/main_menu/main_menu_screen.dart';
 import 'package:flutter/material.dart';

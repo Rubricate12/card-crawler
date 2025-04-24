@@ -1,10 +1,10 @@
-import 'package:card_crawler/constant/effect/consumable_effect.dart';
-
+import '../../type/effect/consumable_effect.dart';
+import '../../type/effect/weapon_effect.dart';
+import '../../type/game_card_type.dart';
 import '../../model/game_card.dart';
-import '../effect/weapon_effect.dart';
-import '../game_card_type.dart';
 
-String _spritePath(String fileName) => 'assets/card_sprites/consumables/$fileName';
+String _spritePath(String fileName) =>
+    'assets/card_sprites/consumables/$fileName';
 
 List<GameCard> _consumableGameCards = [
   GameCard(

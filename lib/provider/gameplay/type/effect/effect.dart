@@ -1,10 +1,10 @@
 import '../../model/game_data.dart';
 
 abstract class Effect {
-  Effect(this.name, this.desc);
+  Effect(this.name, this.description);
 
   String name;
-  String desc;
+  String description;
 
   void trigger(GameData data);
 }

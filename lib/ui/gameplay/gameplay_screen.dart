@@ -1,26 +1,25 @@
 import 'package:card_crawler/ui/constant/game_card_aspect_ratio.dart';
-import 'package:card_crawler/model/user.dart';
-import 'package:card_crawler/provider/gameplay/gameplay_action.dart';
-import 'package:card_crawler/provider/gameplay/gameplay_state.dart';
-import 'package:card_crawler/ui/gameplay/widget/achievement_unlocked_dialog.dart';
-import 'package:card_crawler/ui/gameplay/widget/effect_triggered_dialog.dart';
-import 'package:card_crawler/ui/gameplay/widget/finished_dialog.dart';
+import 'package:card_crawler/provider/gameplay/type/gameplay_action.dart';
+import 'package:card_crawler/provider/gameplay/type/gameplay_state.dart';
+import 'package:card_crawler/ui/extension/ui_scale.dart';
+import 'package:card_crawler/ui/gameplay/widget/dialog/achievement_unlocked_dialog.dart';
+import 'package:card_crawler/ui/gameplay/widget/dialog/effect_triggered_dialog.dart';
+import 'package:card_crawler/ui/gameplay/widget/dialog/finished_dialog.dart';
 import 'package:card_crawler/ui/gameplay/widget/game_card_view.dart';
-import 'package:card_crawler/ui/gameplay/widget/dialog_scrim.dart';
+import 'package:card_crawler/ui/widget/dialog_scrim.dart';
 import 'package:card_crawler/ui/gameplay/widget/empty_card.dart';
-import 'package:card_crawler/ui/gameplay/widget/graveyard_dialog.dart';
+import 'package:card_crawler/ui/gameplay/widget/dialog/graveyard_dialog.dart';
 import 'package:card_crawler/ui/gameplay/widget/main_section.dart';
-import 'package:card_crawler/ui/gameplay/widget/pause_dialog.dart';
-import 'package:card_crawler/ui/gameplay/widget/replace_accessory_dialog.dart';
+import 'package:card_crawler/ui/gameplay/widget/dialog/pause_dialog.dart';
+import 'package:card_crawler/ui/gameplay/widget/dialog/replace_accessory_dialog.dart';
 import 'package:card_crawler/ui/gameplay/widget/side_section.dart';
-import 'package:card_crawler/ui/util/ui_scale.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/game_card.dart';
-import '../../provider/gameplay/constant/card_location.dart';
+import '../../provider/gameplay/model/game_card.dart';
 import '../../provider/gameplay/gameplay_provider.dart';
-import '../../provider/gameplay/ui_action.dart';
+import '../../provider/gameplay/type/card_location.dart';
+import '../../provider/gameplay/type/ui_action.dart';
 import '../theme/color.dart';
 
 class GameplayScreen extends StatefulWidget {
@@ -34,7 +33,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<GameplayProvider>().init(user: User(), level: 1);
+    context.read<GameplayProvider>().init();
   }
 
   @override
@@ -220,7 +219,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                         );
                                       },
                                       isEffectDetailsVisible:
-                                          gameplay.cardWithVisibleEffectDetails ==
+                                          gameplay
+                                              .cardWithVisibleEffectDetails ==
                                           (CardLocation.weapon, 0),
                                     )
                                     : EmptyCard(),
@@ -361,7 +361,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       ),
                       _ => PauseDialog(
                         onRestart: () {
-                          gameplay.init(user: User(), level: 1);
+                          gameplay.init();
                         },
                         onSave: null,
                         onExit: () {

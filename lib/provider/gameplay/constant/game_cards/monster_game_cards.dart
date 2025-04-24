@@ -1,7 +1,7 @@
-import 'package:card_crawler/constant/effect/monster_effect.dart';
-import 'package:card_crawler/model/game_card.dart';
+import 'package:card_crawler/provider/gameplay/model/game_card.dart';
 
-import '../game_card_type.dart';
+import '../../type/effect/monster_effect.dart';
+import '../../type/game_card_type.dart';
 
 String _spritePath(String fileName) => 'assets/card_sprites/monsters/$fileName';
 

@@ -1,4 +1,4 @@
-import 'package:card_crawler/model/game_card.dart';
+import 'package:card_crawler/provider/gameplay/model/game_card.dart';
 
 class GameData {
   GameData({
@@ -13,7 +13,7 @@ class GameData {
     this.health = 20,
     this.durability = 0,
     this.buff = 0,
-    this.tempBuff =0,
+    this.tempBuff = 0,
     this.multiplier = 1,
     this.cursedSpearCounter = 0,
     this.cursedSpearDurability = 0,
@@ -61,4 +61,8 @@ class GameData {
   }
 
   bool isDungeonFieldEmpty() => dungeonField.every((card) => card == null);
+
+  void reduceHealth(int damage) {
+    health = (health <= damage) ? 0 : health - damage;
+  }
 }

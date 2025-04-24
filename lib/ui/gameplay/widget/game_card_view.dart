@@ -1,8 +1,8 @@
 import 'package:card_crawler/ui/constant/game_card_aspect_ratio.dart';
-import 'package:card_crawler/ui/util/ui_scale.dart';
+import 'package:card_crawler/ui/extension/ui_scale.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/game_card.dart';
+import '../../../provider/gameplay/model/game_card.dart';
 
 class GameCardView extends StatelessWidget {
   const GameCardView({
@@ -58,24 +58,27 @@ class GameCardView extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 9,
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Effect: ${card.effect.name}',
-                                  style: TextStyle(fontSize: 14.0 * uiScale),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  card.effect.desc,
-                                  style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 12.0 * uiScale,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Effect: ${card.effect.name}',
+                                    style: TextStyle(fontSize: 14.0 * uiScale),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
+                                  Text(
+                                    card.effect.description,
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 12.0 * uiScale,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
+                          Divider(color: Colors.black26),
                           if (extraActionDescription != null)
                             Expanded(
                               flex: 1,

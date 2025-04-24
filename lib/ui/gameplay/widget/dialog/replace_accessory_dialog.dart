@@ -1,9 +1,9 @@
-import 'package:card_crawler/ui/util/ui_scale.dart';
+import 'package:card_crawler/ui/extension/ui_scale.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/game_card.dart';
-import '../../../provider/gameplay/constant/card_location.dart';
-import 'game_card_view.dart';
+import '../../../../provider/gameplay/model/game_card.dart';
+import '../../../../provider/gameplay/type/card_location.dart';
+import '../game_card_view.dart';
 
 class ReplaceAccessoryDialog extends StatelessWidget {
   const ReplaceAccessoryDialog({
@@ -36,7 +36,8 @@ class ReplaceAccessoryDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: List.generate(accessories.length, (index) {
             final bool isEffectDetailsVisible =
-                cardWithVisibleEffectDetails == (CardLocation.accessories, index);
+                cardWithVisibleEffectDetails ==
+                (CardLocation.accessories, index);
 
             return SizedBox(
               width: cardWidth,

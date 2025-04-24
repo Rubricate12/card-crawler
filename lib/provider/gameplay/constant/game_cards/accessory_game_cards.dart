@@ -1,6 +1,7 @@
-import 'package:card_crawler/constant/effect/weapon_effect.dart';
-import 'package:card_crawler/constant/game_card_type.dart';
-import 'package:card_crawler/model/game_card.dart';
+import 'package:card_crawler/provider/gameplay/type/game_card_type.dart';
+import 'package:card_crawler/provider/gameplay/model/game_card.dart';
+
+import '../../type/effect/weapon_effect.dart';
 
 String _spritePath(String fileName) =>
     'assets/card_sprites/accessories/$fileName';
