@@ -1,3 +1,4 @@
+import 'package:card_crawler/data/local/local_game_save_service.dart';
 import 'package:card_crawler/provider/gameplay/type/effect/consumable_effect.dart';
 import 'package:card_crawler/provider/gameplay/type/effect/effect.dart';
 import 'package:card_crawler/provider/gameplay/type/game_card_type.dart';
@@ -43,11 +44,13 @@ class GameplayProvider extends ChangeNotifier {
 
   bool get canFlee => _data.canFlee;
 
-  void init() {
+  void init({GameData? gameData}) {
     _state = Playing();
     _pendingStates.clear();
 
-    _data = GameData(deck: gameCards..shuffle())..refillDungeonField();
+    _data =
+        gameData ??
+        (GameData(deck: gameCards..shuffle())..refillDungeonField());
 
     _resetCardView();
 
@@ -208,6 +211,13 @@ class GameplayProvider extends ChangeNotifier {
           _queueState(Paused());
           _triggerPendingState();
         }
+      case SaveToDevice():
+        {
+          LocalGameSaveService.save(_data);
+          _triggerPendingState();
+        }
+      case SaveToCloud():
+        {}
       case DismissDialog():
         _triggerPendingState();
     }

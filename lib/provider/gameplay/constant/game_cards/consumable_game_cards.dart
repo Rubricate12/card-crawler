@@ -8,42 +8,49 @@ String _spritePath(String fileName) =>
 
 List<GameCard> _consumableGameCards = [
   GameCard(
+    id: 16,
     type: GameCardType.consumable,
     value: 0,
     effect: BloodthornBrew(),
     asset: _spritePath('2.png'),
   ),
   GameCard(
+    id: 17,
     type: GameCardType.consumable,
     value: 6,
     effect: VampireMallet(),
     asset: _spritePath('3.png'),
   ),
   GameCard(
+    id: 18,
     type: GameCardType.consumable,
     value: 8,
     effect: VampireMallet(),
     asset: _spritePath('4.png'),
   ),
   GameCard(
+    id: 19,
     type: GameCardType.consumable,
     value: 8,
     effect: VampireMallet(),
     asset: _spritePath('5.png'),
   ),
   GameCard(
+    id: 20,
     type: GameCardType.consumable,
     value: 9,
     effect: VampireMallet(),
     asset: _spritePath('6.png'),
   ),
   GameCard(
+    id: 21,
     type: GameCardType.consumable,
     value: 9,
     effect: VampireMallet(),
     asset: _spritePath('7.png'),
   ),
   GameCard(
+    id: 22,
     type: GameCardType.consumable,
     value: 10,
     effect: VampireMallet(),

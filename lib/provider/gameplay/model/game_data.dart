@@ -1,3 +1,4 @@
+import 'package:card_crawler/data/model/savable_game_data.dart';
 import 'package:card_crawler/provider/gameplay/model/game_card.dart';
 
 class GameData {
@@ -65,4 +66,24 @@ class GameData {
   void reduceHealth(int damage) {
     health = (health <= damage) ? 0 : health - damage;
   }
+
+  SavableGameData toSavableGameData() => SavableGameData(
+    deck.map((card) => card.id).toList(),
+    dungeonField.map((card) => card?.id).toList(),
+    weapon?.id,
+    accessories.map((card) => card.id).toList(),
+    graveyard.map((card) => card.id).toList(),
+    pickedCard?.id,
+    level,
+    round,
+    health,
+    durability,
+    buff,
+    tempBuff,
+    multiplier,
+    cursedSpearCounter,
+    cursedSpearDurability,
+    hasHealed,
+    canFlee,
+  );
 }

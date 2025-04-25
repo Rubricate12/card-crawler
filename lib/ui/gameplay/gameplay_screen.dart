@@ -18,12 +18,15 @@ import 'package:provider/provider.dart';
 
 import '../../provider/gameplay/model/game_card.dart';
 import '../../provider/gameplay/gameplay_provider.dart';
+import '../../provider/gameplay/model/game_data.dart';
 import '../../provider/gameplay/type/card_location.dart';
 import '../../provider/gameplay/type/ui_action.dart';
 import '../theme/color.dart';
 
 class GameplayScreen extends StatefulWidget {
-  const GameplayScreen({super.key});
+  const GameplayScreen({super.key, this.gameData});
+
+  final GameData? gameData;
 
   @override
   State<GameplayScreen> createState() => _GameplayScreenState();
@@ -33,7 +36,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<GameplayProvider>().init();
+    context.read<GameplayProvider>().init(gameData: widget.gameData);
   }
 
   @override
@@ -363,7 +366,10 @@ class _GameplayScreenState extends State<GameplayScreen> {
                         onRestart: () {
                           gameplay.init();
                         },
-                        onSave: null,
+                        onDeviceSave: () {
+                          gameplay.uiAction(SaveToDevice());
+                        },
+                        onCloudSave: null,
                         onExit: () {
                           Navigator.pop(context);
                         },

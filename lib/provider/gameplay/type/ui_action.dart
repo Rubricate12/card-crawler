@@ -13,4 +13,8 @@ class ShowGraveyard extends UiAction {}
 
 class Pause extends UiAction {}
 
+class SaveToDevice extends UiAction {}
+
+class SaveToCloud extends UiAction {}
+
 class DismissDialog extends UiAction {}

@@ -1,3 +1,4 @@
+import 'package:card_crawler/provider/gameplay/model/game_data.dart';
 import 'package:card_crawler/ui/type/game_route.dart';
 import 'package:card_crawler/ui/gameplay/gameplay_screen.dart';
 import 'package:card_crawler/ui/main_menu/main_menu_screen.dart';
@@ -14,7 +15,10 @@ class CardCrawlerApp extends StatelessWidget {
       initialRoute: GameRoute.mainMenu.path,
       routes: {
         GameRoute.mainMenu.path: (context) => MainMenuScreen(),
-        GameRoute.gameplay.path: (context) => GameplayScreen(),
+        GameRoute.gameplay.path:
+            (context) => GameplayScreen(
+              gameData: ModalRoute.of(context)?.settings.arguments as GameData?,
+            ),
       },
     );
   }

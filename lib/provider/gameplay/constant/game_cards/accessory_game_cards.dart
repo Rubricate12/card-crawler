@@ -8,42 +8,49 @@ String _spritePath(String fileName) =>
 
 List<GameCard> _accessoryGameCards = [
   GameCard(
+    id: 9,
     type: GameCardType.accessory,
     value: 0,
     effect: VampireMallet(),
     asset: _spritePath('a.png'),
   ),
   GameCard(
+    id: 10,
     type: GameCardType.accessory,
     value: 0,
     effect: VampireMallet(),
     asset: _spritePath('b.png'),
   ),
   GameCard(
+    id: 11,
     type: GameCardType.accessory,
     value: 0,
     effect: VampireMallet(),
     asset: _spritePath('c.png'),
   ),
   GameCard(
+    id: 12,
     type: GameCardType.accessory,
     value: 0,
     effect: VampireMallet(),
     asset: _spritePath('d.png'),
   ),
   GameCard(
+    id: 13,
     type: GameCardType.accessory,
     value: 0,
     effect: VampireMallet(),
     asset: _spritePath('e.png'),
   ),
   GameCard(
+    id: 14,
     type: GameCardType.accessory,
     value: 0,
     effect: VampireMallet(),
     asset: _spritePath('f.png'),
   ),
   GameCard(
+    id: 15,
     type: GameCardType.accessory,
     value: 0,
     effect: VampireMallet(),
