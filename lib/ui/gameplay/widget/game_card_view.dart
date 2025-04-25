@@ -25,6 +25,8 @@ class GameCardView extends StatelessWidget {
     final double uiScale = context.uiScale();
     final bool isSmallScreen = context.isSmallScreen();
 
+    final scrollController = ScrollController();
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -48,49 +50,78 @@ class GameCardView extends StatelessWidget {
             ),
             margin: EdgeInsets.all(4.0 * uiScale),
             clipBehavior: Clip.antiAlias,
-            child: Padding(
-              padding: EdgeInsets.all(
-                (isEffectDetailsVisible ? 16.0 : 4.0) * uiScale,
-              ),
-              child:
-                  isEffectDetailsVisible
-                      ? Column(
-                        children: [
-                          Expanded(
-                            flex: 9,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Effect: ${card.effect.name}',
-                                    style: TextStyle(fontSize: 14.0 * uiScale),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Text(
-                                    card.effect.description,
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 12.0 * uiScale,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
+            child:
+                isEffectDetailsVisible
+                    ? Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 16.0 * uiScale,
+                            top: 16.0 * uiScale,
+                            right: 16.0 * uiScale,
+                            bottom: 8.0 * uiScale,
                           ),
-                          Divider(color: Colors.black26),
-                          if (extraActionDescription != null)
-                            Expanded(
-                              flex: 1,
+                          child: Text(
+                            'Effect: ${card.effect.name}',
+                            style: TextStyle(fontSize: 14.0 * uiScale),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Divider(
+                          height: 1.0,
+                          thickness: 1.0,
+                          indent: 16.0 * uiScale,
+                          endIndent: 16.0 * uiScale,
+                          color: Colors.black26,
+                        ),
+                        Expanded(
+                          child: Scrollbar(
+                            controller: scrollController,
+                            thumbVisibility: true,
+                            interactive: true,
+                            child: SingleChildScrollView(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 8.0 * uiScale,
+                                horizontal: 16.0 * uiScale,
+                              ),
+                              controller: scrollController,
                               child: Text(
-                                extraActionDescription!,
-                                style: TextStyle(fontSize: 12.0 * uiScale),
+                                card.effect.description,
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 12.0 * uiScale,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                        ],
-                      )
-                      : Stack(
+                          ),
+                        ),
+                        Divider(
+                          height: 1.0,
+                          thickness: 1.0,
+                          indent: 16.0 * uiScale,
+                          endIndent: 16.0 * uiScale,
+                          color: Colors.black26,
+                        ),
+                        if (extraActionDescription != null)
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: 16.0 * uiScale,
+                              top: 8.0 * uiScale,
+                              right: 16.0 * uiScale,
+                            ),
+                            child: Text(
+                              extraActionDescription!,
+                              style: TextStyle(fontSize: 12.0 * uiScale),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        SizedBox(height: 16.0 * uiScale),
+                      ],
+                    )
+                    : Padding(
+                      padding: EdgeInsets.all(4.0 * uiScale),
+                      child: Stack(
                         children: [
                           Center(
                             child: SizedBox(
@@ -126,7 +157,7 @@ class GameCardView extends StatelessWidget {
                           ),
                         ],
                       ),
-            ),
+                    ),
           ),
         ),
       ),
