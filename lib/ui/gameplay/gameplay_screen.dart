@@ -119,7 +119,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                       gameplay.deck.length.toString(),
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 48 * uiScale,
+                                        fontSize: 48.0 * uiScale,
                                       ),
                                     ),
                                   ),

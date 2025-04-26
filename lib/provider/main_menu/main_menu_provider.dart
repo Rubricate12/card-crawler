@@ -1,6 +1,8 @@
-import 'package:card_crawler/data/local/local_game_save_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:card_crawler/data/local_game_save_service.dart';
+import 'package:card_crawler/provider/gameplay/type/achievement.dart';
+import 'package:flutter/material.dart';
 
+import '../../data/achievements_service.dart';
 import '../gameplay/model/game_data.dart';
 
 class MainMenuProvider extends ChangeNotifier {
@@ -8,8 +10,29 @@ class MainMenuProvider extends ChangeNotifier {
 
   GameData? get localGameData => _localGameData;
 
+  final List<Achievement> _unlockedAchievements = List.empty(growable: true);
+
+  List<Achievement> get unlockedAchievements => _unlockedAchievements;
+
+  final List<Achievement> _lockedAchievements = List.empty(growable: true);
+
+  List<Achievement> get lockedAchievements => _lockedAchievements;
+
   Future<void> loadGameData() async {
     _localGameData = await LocalGameSaveService.load();
+    notifyListeners();
+  }
+
+  Future<void> loadAchievements() async {
+    final (unlockedAchievements, lockedAchievements) =
+        await AchievementsService.getAchievements();
+
+    _unlockedAchievements.clear();
+    _unlockedAchievements.addAll(unlockedAchievements);
+
+    _lockedAchievements.clear();
+    _lockedAchievements.addAll(lockedAchievements);
+
     notifyListeners();
   }
 }

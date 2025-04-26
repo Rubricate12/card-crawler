@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../provider/gameplay/model/game_data.dart';
-import '../model/savable_game_data.dart';
+import '../provider/gameplay/model/game_data.dart';
+import 'model/savable_game_data.dart';
 
 class LocalGameSaveService {
   static const _key = "game_data";

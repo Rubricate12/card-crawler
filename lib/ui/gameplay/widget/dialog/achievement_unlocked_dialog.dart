@@ -1,7 +1,7 @@
 import 'package:card_crawler/ui/extension/ui_scale.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../type/achievement.dart';
+import '../../../../provider/gameplay/type/achievement.dart';
 
 class AchievementUnlockedDialog extends StatelessWidget {
   const AchievementUnlockedDialog({super.key, required this.achievement});
@@ -22,7 +22,7 @@ class AchievementUnlockedDialog extends StatelessWidget {
         ),
         Text(
           achievement.description,
-          style: TextStyle(color: Colors.white70, fontSize: 24 * uiScale),
+          style: TextStyle(color: Colors.white70, fontSize: 24.0 * uiScale),
           textAlign: TextAlign.center,
         ),
       ],

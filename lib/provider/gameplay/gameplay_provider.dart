@@ -1,4 +1,4 @@
-import 'package:card_crawler/data/local/local_game_save_service.dart';
+import 'package:card_crawler/data/local_game_save_service.dart';
 import 'package:card_crawler/provider/gameplay/type/effect/consumable_effect.dart';
 import 'package:card_crawler/provider/gameplay/type/effect/effect.dart';
 import 'package:card_crawler/provider/gameplay/type/game_card_type.dart';
@@ -6,8 +6,10 @@ import 'package:card_crawler/provider/gameplay/model/game_card.dart';
 import 'package:card_crawler/provider/gameplay/type/gameplay_state.dart';
 import 'package:card_crawler/provider/gameplay/type/card_location.dart';
 import 'package:card_crawler/provider/gameplay/type/ui_action.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
+import '../../data/achievements_service.dart';
+import 'type/achievement.dart';
 import 'constant/game_cards/game_cards.dart';
 import 'model/game_data.dart';
 import 'type/gameplay_action.dart';
@@ -44,7 +46,9 @@ class GameplayProvider extends ChangeNotifier {
 
   bool get canFlee => _data.canFlee;
 
-  void init({GameData? gameData}) {
+  final Set<int> _unlockedAchievementIds = {};
+
+  Future<void> init({GameData? gameData}) async {
     _state = Playing();
     _pendingStates.clear();
 
@@ -55,6 +59,12 @@ class GameplayProvider extends ChangeNotifier {
     _resetCardView();
 
     notifyListeners();
+
+    final (unlockedAchievements, _) =
+        await AchievementsService.getAchievements();
+    _unlockedAchievementIds.addAll(
+      unlockedAchievements.map((achievement) => achievement.id),
+    );
   }
 
   void action(GameplayAction action) {
@@ -152,6 +162,12 @@ class GameplayProvider extends ChangeNotifier {
           if (_data.health == 0) {
             _queueState(Finished(isWin: false));
           } else if (_data.isDungeonFieldEmpty() && _data.deck.isEmpty) {
+            _unlockAchievement(Achievement.dungeonCrawler);
+
+            if (_data.health == 20) {
+              _unlockAchievement(Achievement.perfectAdventurer);
+            }
+
             _queueState(Finished(isWin: true));
           }
 
@@ -237,5 +253,14 @@ class GameplayProvider extends ChangeNotifier {
     var nextState =
         (_pendingStates.isNotEmpty) ? _pendingStates.removeAt(0) : null;
     _state = nextState ?? Playing();
+  }
+
+  void _unlockAchievement(achievement) {
+    final isUnlocked = _unlockedAchievementIds.contains(achievement.id);
+    if (!isUnlocked) {
+      _unlockedAchievementIds.add(achievement.id);
+      _queueState(AchievementUnlocked(achievement: achievement));
+      AchievementsService.addUnlockedAchievement(achievement);
+    }
   }
 }

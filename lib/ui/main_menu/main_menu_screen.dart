@@ -1,4 +1,6 @@
 import 'package:card_crawler/provider/main_menu/main_menu_provider.dart';
+import 'package:card_crawler/ui/extension/ui_scale.dart';
+import 'package:card_crawler/ui/main_menu/widget/achievements_dialog.dart';
 import 'package:card_crawler/ui/type/game_route.dart';
 import 'package:card_crawler/ui/widget/dialog_scrim.dart';
 import 'package:card_crawler/ui/widget/menu_container.dart';
@@ -17,9 +19,12 @@ class MainMenuScreen extends StatefulWidget {
 
 class _MainMenuScreenState extends State<MainMenuScreen> {
   bool isContinueDialogVisible = false;
+  bool isAchievementsDialogVisible = false;
 
   @override
   Widget build(BuildContext context) {
+    final double uiScale = context.uiScale();
+
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Consumer<MainMenuProvider>(
@@ -51,7 +56,15 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                         },
                       ),
                       MenuItem(title: 'LEADERBOARD', onPressed: null),
-                      MenuItem(title: 'ACHIEVEMENTS', onPressed: null),
+                      MenuItem(
+                        title: 'ACHIEVEMENTS',
+                        onPressed: () {
+                          provider.loadAchievements();
+                          setState(() {
+                            isAchievementsDialogVisible = true;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -62,6 +75,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                         isContinueDialogVisible = false;
                       });
                     },
+                    margin: EdgeInsets.all(64.0 * uiScale),
                     child: MenuContainer(
                       children: [
                         MenuItem(
@@ -82,6 +96,19 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                         ),
                         MenuItem(title: 'CONTINUE FROM CLOUD', onPressed: null),
                       ],
+                    ),
+                  ),
+                if (isAchievementsDialogVisible)
+                  DialogScrim(
+                    onDismiss: () {
+                      setState(() {
+                        isAchievementsDialogVisible = false;
+                      });
+                    },
+                    margin: EdgeInsets.all(64.0 * uiScale),
+                    child: AchievementsDialog(
+                      unlockedAchievements: provider.unlockedAchievements,
+                      lockedAchievements: provider.lockedAchievements,
                     ),
                   ),
               ],
