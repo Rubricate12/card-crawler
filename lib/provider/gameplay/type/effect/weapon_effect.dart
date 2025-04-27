@@ -1,9 +1,9 @@
 import '../../model/game_data.dart';
 import 'effect.dart';
 
-class VampireMallet extends OnUse {
-  VampireMallet()
-    : super('Vampire Mallet', 'Fighting an enemy will recover 1 HP');
+class HolyHammer extends OnUse {
+  HolyHammer()
+    : super('Holy Hammer', 'Fighting an enemy will recover 1 HP');
 
   @override
   void trigger(GameData data) {
@@ -24,10 +24,10 @@ class ArtemisBow extends OnUse {
   }
 }
 
-class WarAxe extends OnUse {
-  WarAxe()
+class TenaciousMallet extends OnUse {
+  TenaciousMallet()
     : super(
-        'War Axe',
+        'Tenacious Mallet',
         'This weapon will deal more damage the lower it\'s durability is',
       );
 
@@ -50,27 +50,22 @@ class IchorSickle extends OnUse {
 
   @override
   void trigger(GameData data) {
-    data.pickedCard!.value -= 3;
+    data.pickedCard?.value -= 3;
+    if ((data.pickedCard?.value ?? 0) < 0){
+      data.pickedCard?.value = 0;
+    }
   }
 }
 
-class CursedSpear extends OnUse {
-  CursedSpear()
+class CursedAxe extends OnUse {
+  CursedAxe()
     : super(
-        'Cursed Spear',
-        'In combat, this weapon is stronger by 5 points, but it will recharge after every use.',
+        'Cursed Axe',
+        'This weapon\'s durability does not decay, but it needs to recharge after every use',
       );
 
   @override
   void trigger(GameData data) {
-    data.tempBuff = 5;
-    if (data.cursedSpearCounter % 2 != 0) {
-      data.cursedSpearDurability = data.durability;
-      data.durability = 0;
-    } else if (data.cursedSpearCounter > 1 &&
-        data.cursedSpearCounter % 2 != 0) {
-      data.durability = data.cursedSpearDurability;
-    }
   }
 }
 
@@ -100,25 +95,25 @@ class BlueStaff extends OnUse {
   }
 }
 
-class HammerOfJustice extends OnUse {
-  HammerOfJustice()
+class WarAxe extends OnUse {
+  WarAxe()
     : super(
-        'Hammer Of Justice',
+        'War Axe',
         'This weapon gets stronger for every 5 hp lost',
       );
 
   @override
   void trigger(GameData data) {
-    int hpLost = (20 - (data.health) / 5) as int;
-    data.tempBuff = hpLost * 2;
+    int hpLost = (4 - (data.health) / 5).toInt();
+    data.tempBuff = hpLost * 3;
   }
 }
 
-class MirrorBlade extends OnUse {
-  MirrorBlade()
+class MirrorBolt extends OnUse {
+  MirrorBolt()
     : super(
-        'Mirror Blade',
-        'This weapon will copy the strength of the monster you\'re facing, but it breaks easier',
+        'Mirror Bolt',
+        'This weapon will copy the strength of the monster you\'re facing',
       );
 
   @override

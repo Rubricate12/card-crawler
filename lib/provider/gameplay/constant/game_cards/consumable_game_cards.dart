@@ -6,7 +6,7 @@ import '../../model/game_card.dart';
 String _spritePath(String fileName) =>
     'assets/card_sprites/consumables/$fileName';
 
-List<GameCard> _consumableGameCards = [
+List<GameCard> consumableGameCards = [
   GameCard(
     id: 16,
     type: GameCardType.consumable,
@@ -17,45 +17,43 @@ List<GameCard> _consumableGameCards = [
   GameCard(
     id: 17,
     type: GameCardType.consumable,
-    value: 6,
-    effect: VampireMallet(),
-    asset: _spritePath('3.png'),
+    value: 8,
+    effect: TitansShroom(),
+    asset: _spritePath('2.png'),
   ),
   GameCard(
     id: 18,
     type: GameCardType.consumable,
     value: 8,
-    effect: VampireMallet(),
-    asset: _spritePath('4.png'),
+    effect: TemporalDew(),
+    asset: _spritePath('5.png'),
   ),
   GameCard(
     id: 19,
     type: GameCardType.consumable,
     value: 8,
-    effect: VampireMallet(),
-    asset: _spritePath('5.png'),
+    effect: EmeticElixir(),
+    asset: _spritePath('6.png'),
   ),
   GameCard(
     id: 20,
     type: GameCardType.consumable,
     value: 9,
-    effect: VampireMallet(),
-    asset: _spritePath('6.png'),
+    effect: BolterPotion(),
+    asset: _spritePath('5.png'),
   ),
   GameCard(
     id: 21,
     type: GameCardType.consumable,
     value: 9,
-    effect: VampireMallet(),
-    asset: _spritePath('7.png'),
+    effect: AgedBerries(),
+    asset: _spritePath('3.png'),
   ),
   GameCard(
     id: 22,
     type: GameCardType.consumable,
     value: 10,
-    effect: VampireMallet(),
+    effect: VolatileElixir(),
     asset: _spritePath('8.png'),
   ),
 ];
-
-List<GameCard> get consumableGameCards => _consumableGameCards.toList();

@@ -16,4 +16,7 @@ class GameCard {
   int value;
   Effect effect;
   String asset;
+
+  GameCard copy() =>
+      GameCard(id: id, type: type, value: value, effect: effect, asset: asset);
 }

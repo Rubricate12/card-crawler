@@ -25,6 +25,6 @@ abstract class OnKill extends Effect {
   OnKill(super.name, super.desc);
 }
 
-/*abstract class OnPlace extends Effect {
-  OnPlace(super.name, super.desc);
-}*/
+abstract class AccessoryEffect extends Effect {
+  AccessoryEffect(super.name, super.desc);
+}

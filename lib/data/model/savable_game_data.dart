@@ -17,8 +17,10 @@ class SavableGameData {
     this.buff,
     this.tempBuff,
     this.multiplier,
-    this.cursedSpearCounter,
-    this.cursedSpearDurability,
+    this.accessoryBuff,
+    this.cursedAxeCounter,
+    this.cursedAxeDurability,
+    this.emperorCounter,
     this.hasHealed,
     this.canFlee,
   );
@@ -36,8 +38,10 @@ class SavableGameData {
   int buff;
   int tempBuff;
   int multiplier;
-  int cursedSpearCounter;
-  int cursedSpearDurability;
+  int accessoryBuff;
+  int cursedAxeCounter;
+  int cursedAxeDurability;
+  int emperorCounter;
   bool hasHealed;
   bool canFlee;
 
@@ -77,8 +81,10 @@ class SavableGameData {
     buff: buff,
     tempBuff: tempBuff,
     multiplier: multiplier,
-    cursedSpearCounter: cursedSpearCounter,
-    cursedSpearDurability: cursedSpearDurability,
+    accessoryBuff: accessoryBuff,
+    cursedAxeCounter: cursedAxeCounter,
+    cursedAxeDurability: cursedAxeDurability,
+    emperorCounter: emperorCounter,
     hasHealed: hasHealed,
     canFlee: canFlee,
   );
@@ -98,8 +104,10 @@ class SavableGameData {
         json['buff'],
         json['tempBuff'],
         json['multiplier'],
-        json['cursedSpearCounter'],
-        json['cursedSpearDurability'],
+        json['accessoryBuff'],
+        json['cursedAxeCounter'],
+        json['cursedAxeDurability'],
+        json['emperorCounter'],
         json['hasHealed'],
         json['canFlee'],
       );
@@ -118,8 +126,10 @@ class SavableGameData {
     'buff': buff,
     'tempBuff': tempBuff,
     'multiplier': multiplier,
-    'cursedSpearCounter': cursedSpearCounter,
-    'cursedSpearDurability': cursedSpearDurability,
+    'accessoryBuff': accessoryBuff,
+    'cursedAxeCounter': cursedAxeCounter,
+    'cursedAxeDurability': cursedAxeDurability,
+    'emperorCounter': emperorCounter,
     'hasHealed': hasHealed,
     'canFlee': canFlee,
   };

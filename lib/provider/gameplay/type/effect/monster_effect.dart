@@ -1,3 +1,4 @@
+import 'package:card_crawler/provider/gameplay/type/effect/accessory_effect.dart';
 import 'package:card_crawler/provider/gameplay/type/game_card_type.dart';
 
 import '../../model/game_data.dart';
@@ -7,7 +8,7 @@ class NoEscape extends OnField {
   NoEscape()
     : super(
         'No Escape',
-        'As long as this card is on a dungeon field, you can\'t flee.',
+        'When this card is on the dungeon field, you can\'t flee until next round.',
       );
 
   @override
@@ -58,6 +59,9 @@ class Corrosive extends OnPicked {
   @override
   void trigger(GameData data) {
     data.durability -= 3;
+    if (data.durability < 0) {
+      data.durability = 0;
+    }
   }
 }
 
@@ -73,6 +77,12 @@ class Ally extends OnKill {
     var newWeapon = data.graveyard.removeLast();
     if (data.weapon != null) data.graveyard.add(data.weapon!);
     data.weapon = newWeapon;
+    data.durability = 15;
+    for (var card in data.accessories) {
+      if (card.effect is HeroCape){
+        data.weapon?.value += 3;
+      }
+    }
   }
 }
 
@@ -82,7 +92,11 @@ class Wrecker extends OnKill {
 
   @override
   void trigger(GameData data) {
-    if (data.weapon != null) data.graveyard.add(data.weapon!);
+    if (data.weapon != null) {
+      data.graveyard.add(data.weapon!);
+      data.weapon = null;
+      data.durability = 0;
+    }
   }
 }
 
@@ -121,7 +135,9 @@ class Opportunist extends OnPicked {
 
   @override
   void trigger(GameData data) {
-    data.tempBuff = 5;
+    if (data.weapon == null){
+      data.tempBuff = 5;
+    }
   }
 }
 
@@ -136,8 +152,6 @@ class Mimic extends OnPicked {
   void trigger(GameData data) {
     if (data.pickedCard != null && data.weapon != null) {
       data.pickedCard!.value = data.weapon!.value;
-    } else {
-      data.pickedCard!.value = 0;
     }
   }
 }
@@ -159,14 +173,17 @@ class Vengeful extends OnPicked {
   Vengeful()
     : super(
         'Vengeful',
-        'This enemy gains the power of the last monster you killed.',
+        'This enemy gains half the power of the last monster you killed.',
       );
 
   @override
   void trigger(GameData data) {
-    var firstMonster = data.graveyard.lastWhere(
-      (card) => card.type == GameCardType.monster,
-    );
-    data.tempBuff = firstMonster.value;
+    try {
+      var firstMonster = data.graveyard.lastWhere(
+            (card) => card.type == GameCardType.monster,
+      );
+      data.tempBuff = (firstMonster.value / 2).toInt();
+    } on StateError catch (_, _) {
+    }
   }
 }

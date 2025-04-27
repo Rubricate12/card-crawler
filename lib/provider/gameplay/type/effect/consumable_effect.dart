@@ -10,26 +10,30 @@ class TemporalDew extends OnPicked {
 
   @override
   void trigger(GameData data) {
-    data.durability = 15;
+    if (data.weapon != null){
+      data.durability = 15;
+    }
     data.canFlee = true;
   }
 }
 
-class TitansDrop extends OnPicked {
-  TitansDrop()
+class TitansShroom extends OnPicked {
+  TitansShroom()
     : super(
-        'Titan\'s Drop',
-        'This potion will increase your weapon\'s strength by 3 points',
+        'Titan\'s Shrooms',
+        'This Mushroom will increase your weapon\'s strength by 3 points',
       );
 
   @override
   void trigger(GameData data) {
-    data.buff = 3;
+    if (data.weapon != null){
+      data.weapon?.value += 3;
+    }
   }
 }
 
-class GamblersTears extends OnPicked {
-  GamblersTears() : super('Gambler\'s Tears', 'Discard 3 cards from the deck');
+class EmeticElixir extends OnPicked {
+  EmeticElixir() : super('Emetic Elixir', 'Discard 3 cards from the deck');
 
   @override
   void trigger(GameData data) {
@@ -72,13 +76,16 @@ class VolatileElixir extends OnPicked {
     for (int i = 0; i < data.dungeonField.length; i++) {
       if (data.dungeonField[i] != null) {
         data.graveyard.add(data.dungeonField[i]!);
+        data.dungeonField[i] = null;
       }
     }
-    data.graveyard.add(data.weapon!);
-    data.durability = 0;
-    for (int i = 0; i < data.accessories.length; i++) {
-      data.graveyard.add(data.accessories[i]);
+    if (data.weapon != null){
+      data.graveyard.add(data.weapon!);
+      data.durability = 0;
+      data.weapon = null;
     }
+    data.graveyard.addAll(data.accessories);
+    data.accessories.clear();
   }
 }
 
@@ -91,16 +98,18 @@ class BloodthornBrew extends OnPicked {
 
   @override
   void trigger(GameData data) {
-    data.weapon!.value = 30;
-    data.durability = 15;
+    if (data.weapon != null){
+      data.weapon!.value = 30;
+      data.durability = 15;
+    }
   }
 }
 
-class FineWine extends OnPicked {
-  FineWine()
+class AgedBerries extends OnPicked {
+  AgedBerries()
     : super(
-        'Fine Wine',
-        'This potion will heal you more for every round you\'ve played',
+        'Aged Berries',
+        'These Berries will heal you more for every round you\'ve played',
       );
 
   @override

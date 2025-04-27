@@ -1,6 +1,8 @@
 import 'package:card_crawler/data/local_game_save_service.dart';
+import 'package:card_crawler/provider/gameplay/type/effect/accessory_effect.dart';
 import 'package:card_crawler/provider/gameplay/type/effect/consumable_effect.dart';
 import 'package:card_crawler/provider/gameplay/type/effect/effect.dart';
+import 'package:card_crawler/provider/gameplay/type/effect/weapon_effect.dart';
 import 'package:card_crawler/provider/gameplay/type/game_card_type.dart';
 import 'package:card_crawler/provider/gameplay/model/game_card.dart';
 import 'package:card_crawler/provider/gameplay/type/gameplay_state.dart';
@@ -54,9 +56,18 @@ class GameplayProvider extends ChangeNotifier {
 
     _data =
         gameData ??
-        (GameData(deck: gameCards..shuffle())..refillDungeonField());
+        (GameData(deck: gameCards.toList()..shuffle())..refillDungeonField());
 
     _resetCardView();
+
+    for (var card in _data.dungeonField) {
+      if (card != null && card.effect is OnField) {
+        card.effect.trigger(_data);
+        _queueState(EffectTriggered(card: card));
+      }
+    }
+
+    _triggerPendingState();
 
     notifyListeners();
 
@@ -70,10 +81,9 @@ class GameplayProvider extends ChangeNotifier {
   void action(GameplayAction action) {
     _resetCardView();
 
-    for (var card in _data.dungeonField) {
-      if (card != null && card.effect is OnField) {
-        card.effect.trigger(_data);
-        _queueState(EffectTriggered(card: card));
+    for (var card in _data.accessories) {
+      if (card.effect is SpectreBoots){
+        _data.canFlee = true;
       }
     }
 
@@ -82,6 +92,12 @@ class GameplayProvider extends ChangeNotifier {
         {
           _data.pickedCard = card;
           _data.removeCardFromDungeonField(index);
+
+          for (var acc in _data.accessories) {
+            if (acc.effect is AccessoryEffect){
+              acc.effect.trigger(_data);
+            }
+          }
 
           if (card.effect is OnPicked) {
             card.effect.trigger(_data);
@@ -92,12 +108,8 @@ class GameplayProvider extends ChangeNotifier {
             case GameCardType.consumable:
               {
                 if (!_data.hasHealed) {
-                  if (_data.health + card.value > 20) {
-                    _data.health = 20;
-                  } else {
                     _data.health += card.value;
                     _data.hasHealed = true;
-                  }
                 }
                 _data.graveyard.add(card);
               }
@@ -113,25 +125,20 @@ class GameplayProvider extends ChangeNotifier {
               }
             case GameCardType.monster:
               {
-                if (card.effect is OnPicked) {
-                  card.effect.trigger(_data);
-                  _queueState(EffectTriggered(card: card));
-                }
-
                 card.value += _data.tempBuff;
                 _data.buff = 0;
                 _data.tempBuff = 0;
 
                 if (_data.durability > card.value) {
-                  if (_data.weapon!.effect is OnUse) {
-                    _data.weapon!.effect.trigger(_data);
+                  if (_data.weapon?.effect is OnUse) {
+                    _data.weapon?.effect.trigger(_data);
                     _queueState(EffectTriggered(card: _data.weapon!));
                   }
 
                   _data.weapon?.value += _data.buff;
                   _data.weapon?.value += _data.tempBuff;
 
-                  if (card.value > _data.weapon!.value) {
+                  if (card.value > (_data.weapon?.value ?? 0)) {
                     _data.reduceHealth(card.value - _data.weapon!.value);
                   }
 
@@ -147,6 +154,18 @@ class GameplayProvider extends ChangeNotifier {
                 if (card.effect is OnKill) {
                   card.effect.trigger(_data);
                   _queueState(EffectTriggered(card: card));
+                }
+                if (_data.weapon?.effect is CursedAxe){
+                  _data.cursedAxeCounter++;
+                  if (_data.cursedAxeCounter % 2 != 0){
+                    _data.durability = 0;
+                  } else {
+                    _data.durability = 15;
+                  }
+                }
+
+                if (_data.weapon?.effect is ArtemisBow){
+                  _data.weapon?.effect.trigger(_data);
                 }
               }
             case GameCardType.accessory:
@@ -170,6 +189,8 @@ class GameplayProvider extends ChangeNotifier {
 
             _queueState(Finished(isWin: true));
           }
+
+          if (_data.health > 20) _data.health = 20;
 
           _data.buff = 0;
           _data.tempBuff = 0;
@@ -202,6 +223,13 @@ class GameplayProvider extends ChangeNotifier {
           _data.refillDungeonField();
           _data.canFlee = false;
         }
+    }
+
+    for (var card in _data.dungeonField) {
+      if (card != null && card.effect is OnField) {
+        card.effect.trigger(_data);
+        _queueState(EffectTriggered(card: card));
+      }
     }
 
     _triggerPendingState();

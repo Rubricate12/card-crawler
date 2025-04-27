@@ -16,10 +16,13 @@ class GameData {
     this.buff = 0,
     this.tempBuff = 0,
     this.multiplier = 1,
-    this.cursedSpearCounter = 0,
-    this.cursedSpearDurability = 0,
+    this.accessoryBuff = 0,
+    this.cursedAxeCounter = 0,
+    this.cursedAxeDurability = 0,
+    this.emperorCounter = 0,
     this.hasHealed = false,
     this.canFlee = true,
+
   }) {
     this.deck = deck ?? List.empty(growable: true);
     this.dungeonField = dungeonField ?? List.filled(4, null);
@@ -40,8 +43,10 @@ class GameData {
   int buff;
   int tempBuff;
   int multiplier;
-  int cursedSpearCounter;
-  int cursedSpearDurability;
+  int accessoryBuff;
+  int cursedAxeCounter;
+  int cursedAxeDurability;
+  int emperorCounter;
   bool hasHealed;
   bool canFlee;
 
@@ -50,7 +55,7 @@ class GameData {
   }
 
   bool isDungeonFieldLow() {
-    return dungeonField.where((card) => card != null).length == 1;
+    return dungeonField.where((card) => card != null).length <= 1;
   }
 
   void refillDungeonField() {
@@ -81,8 +86,10 @@ class GameData {
     buff,
     tempBuff,
     multiplier,
-    cursedSpearCounter,
-    cursedSpearDurability,
+    accessoryBuff,
+    cursedAxeCounter,
+    cursedAxeDurability,
+    emperorCounter,
     hasHealed,
     canFlee,
   );

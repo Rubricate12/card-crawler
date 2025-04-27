@@ -12,4 +12,4 @@ List<GameCard> _gameCards =
       ..addAll(consumableGameCards)
       ..addAll(monsterGameCards);
 
-List<GameCard> get gameCards => _gameCards.toList();
+List<GameCard> get gameCards => _gameCards.map((card) => card.copy()).toList();
