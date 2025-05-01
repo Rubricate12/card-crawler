@@ -11,6 +11,7 @@ class GameData {
     this.pickedCard,
     this.level = 1,
     this.round = 1,
+    this.score = 0,
     this.health = 20,
     this.durability = 0,
     this.buff = 0,
@@ -38,6 +39,7 @@ class GameData {
   GameCard? pickedCard;
   int level;
   int round;
+  int score;
   int health;
   int durability;
   int buff;
@@ -81,6 +83,7 @@ class GameData {
     pickedCard?.id,
     level,
     round,
+    score,
     health,
     durability,
     buff,

@@ -12,6 +12,7 @@ class SavableGameData {
     this.pickedCard,
     this.level,
     this.round,
+    this.score,
     this.health,
     this.durability,
     this.buff,
@@ -33,6 +34,7 @@ class SavableGameData {
   int? pickedCard;
   int level;
   int round;
+  int score;
   int health;
   int durability;
   int buff;
@@ -76,6 +78,7 @@ class SavableGameData {
             : gameCards.firstWhere((card) => card.id == pickedCard),
     level: level,
     round: round,
+    score: score,
     health: health,
     durability: durability,
     buff: buff,
@@ -99,6 +102,7 @@ class SavableGameData {
         json['pickedCard'],
         json['level'],
         json['round'],
+        json['score'],
         json['health'],
         json['durability'],
         json['buff'],
@@ -121,6 +125,7 @@ class SavableGameData {
     'pickedCard': pickedCard,
     'level': level,
     'round': round,
+    'score': score,
     'health': health,
     'durability': durability,
     'buff': buff,

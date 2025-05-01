@@ -167,6 +167,8 @@ class GameplayProvider extends ChangeNotifier {
                 if (_data.weapon?.effect is ArtemisBow){
                   _data.weapon?.effect.trigger(_data);
                 }
+
+                _data.score += (card.value * 100);
               }
             case GameCardType.accessory:
               {
@@ -189,7 +191,6 @@ class GameplayProvider extends ChangeNotifier {
 
             _queueState(Finished(isWin: true));
           }
-
           if (_data.health > 20) _data.health = 20;
 
           _data.buff = 0;
