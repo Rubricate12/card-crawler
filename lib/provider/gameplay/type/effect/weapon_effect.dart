@@ -20,7 +20,7 @@ class ArtemisBow extends OnUse {
 
   @override
   void trigger(GameData data) {
-    data.durability = 15;
+    data.durability = 20;
   }
 }
 
@@ -34,9 +34,9 @@ class TenaciousMallet extends OnUse {
   @override
   void trigger(GameData data) {
     if (data.durability < 9 && data.durability >= 6) {
-      data.buff = 3;
+      data.tempBuff = 3;
     } else if (data.durability < 6) {
-      data.buff = 5;
+      data.tempBuff = 5;
     }
   }
 }

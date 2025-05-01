@@ -26,7 +26,7 @@ class Scaling extends OnPicked {
 
   @override
   void trigger(GameData data) {
-    data.tempBuff = data.round;
+    data.buff = data.round;
   }
 }
 
@@ -52,7 +52,7 @@ class AntiHeal extends OnKill {
   }
 }
 
-class Corrosive extends OnPicked {
+class Corrosive extends OnKill {
   Corrosive()
     : super('Corrosive', 'Fighting this monster will lose you 3 durability.');
 
@@ -77,7 +77,7 @@ class Ally extends OnKill {
     var newWeapon = data.graveyard.removeLast();
     if (data.weapon != null) data.graveyard.add(data.weapon!);
     data.weapon = newWeapon;
-    data.durability = 15;
+    data.durability = 20;
     for (var card in data.accessories) {
       if (card.effect is HeroCape){
         data.weapon?.value += 3;
@@ -136,7 +136,7 @@ class Opportunist extends OnPicked {
   @override
   void trigger(GameData data) {
     if (data.weapon == null){
-      data.tempBuff = 5;
+      data.buff = 5;
     }
   }
 }
@@ -182,7 +182,7 @@ class Vengeful extends OnPicked {
       var firstMonster = data.graveyard.lastWhere(
             (card) => card.type == GameCardType.monster,
       );
-      data.tempBuff = (firstMonster.value / 2).toInt();
+      data.buff = (firstMonster.value / 2).toInt();
     } on StateError catch (_, _) {
     }
   }

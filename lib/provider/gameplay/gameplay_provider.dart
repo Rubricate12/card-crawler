@@ -93,6 +93,8 @@ class GameplayProvider extends ChangeNotifier {
           _data.pickedCard = card;
           _data.removeCardFromDungeonField(index);
 
+          //bool cheat = true;
+
           for (var acc in _data.accessories) {
             if (acc.effect is AccessoryEffect){
               acc.effect.trigger(_data);
@@ -121,11 +123,11 @@ class GameplayProvider extends ChangeNotifier {
                   _data.graveyard.add(_data.weapon!);
                   _data.weapon = card;
                 }
-                _data.durability = 15;
+                _data.durability = 20;
               }
             case GameCardType.monster:
               {
-                card.value += _data.tempBuff;
+                card.value += _data.buff;
                 _data.buff = 0;
                 _data.tempBuff = 0;
 
@@ -160,7 +162,7 @@ class GameplayProvider extends ChangeNotifier {
                   if (_data.cursedAxeCounter % 2 != 0){
                     _data.durability = 0;
                   } else {
-                    _data.durability = 15;
+                    _data.durability = 20;
                   }
                 }
 

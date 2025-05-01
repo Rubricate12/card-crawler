@@ -11,7 +11,7 @@ class TemporalDew extends OnPicked {
   @override
   void trigger(GameData data) {
     if (data.weapon != null){
-      data.durability = 15;
+      data.durability = 20;
     }
     data.canFlee = true;
   }
@@ -100,7 +100,7 @@ class BloodthornBrew extends OnPicked {
   void trigger(GameData data) {
     if (data.weapon != null){
       data.weapon!.value = 30;
-      data.durability = 15;
+      data.durability = 20;
     }
   }
 }

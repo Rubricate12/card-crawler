@@ -103,7 +103,7 @@ class EmperorCrown extends AccessoryEffect {
   EmperorCrown()
       : super(
     'Emperor\'s Crown',
-    'When having this accessory equipped, weapon and consumable you pickup will have +5 value, but monsters will have +3 value, this accessory will dissappear after 5 use',
+    'When having this accessory equipped, weapon and consumable you pickup will have +5 value, but monsters will have +2 value, this accessory will dissappear after 5 use',
   );
 
   @override
@@ -111,7 +111,7 @@ class EmperorCrown extends AccessoryEffect {
     if (data.pickedCard?.type == GameCardType.weapon || data.pickedCard?.type == GameCardType.consumable){
       data.pickedCard?.value += 5;
     } else if (data.pickedCard?.type == GameCardType.monster){
-      data.pickedCard?.value += 3;
+      data.pickedCard?.value += 2;
     }
     data.emperorCounter++;
     if (data.emperorCounter >= 4){
