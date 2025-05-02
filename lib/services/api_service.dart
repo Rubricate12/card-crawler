@@ -1,21 +1,38 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://10.0.2.2:8000/api'; // adjust if needed
+  static const String baseUrl = 'http://10.0.2.2:8000/api';
 
   static Future<void> updateAchievements(String username, List<int> achievementIds) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/achievements/update'), // Adjust route as needed
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'username': username,
-        'achievements': achievementIds,
-      }),
-    );
+    try {
+      // Loop through the achievements list and unlock them one by one
+      for (int achievementId in achievementIds) {
 
-    if (response.statusCode != 200) {
-      throw Exception('Failed to sync achievements');
+        final response = await http.post(
+          Uri.parse('$baseUrl/achievements/unlock'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'username': username,
+            'achievement_id': achievementId,
+          }),
+        );
+
+        debugPrint('Response status: ${response.statusCode}');
+        debugPrint('Response body: ${response.body}');
+
+        if (response.statusCode == 200) {
+          debugPrint('Successfully unlocked achievement: $achievementId for user: $username');
+        } else {
+          debugPrint('Failed to unlock achievement: $achievementId for user: $username, Status: ${response.statusCode}');
+          throw Exception('Failed to unlock achievement');
+        }
+        await Future.delayed(const Duration(milliseconds: 200));
+      }
+    } catch (e) {
+      debugPrint('Error updating achievements: $e');
+      throw Exception('Error updating achievements: $e');
     }
   }
 

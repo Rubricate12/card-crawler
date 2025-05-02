@@ -24,8 +24,6 @@ class MainMenuProvider extends ChangeNotifier {
   }
 
   Future<void> loadAchievements(String? username) async {
-    _unlockedAchievements.clear();
-    _lockedAchievements.clear();
     notifyListeners();
     if (username != null) {
       await AchievementsService.syncAchievementsFromServer(username);

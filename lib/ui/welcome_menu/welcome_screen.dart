@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:card_crawler/ui/main_menu/main_menu_screen.dart'; // Import your existing main menu screen
 import 'package:card_crawler/ui/type/game_route.dart';
+import 'package:card_crawler/provider/auth/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -44,8 +45,9 @@ class WelcomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               OutlinedButton(
-                onPressed: () {
-                  _navigate(context, const MainMenuScreen());
+                onPressed: () async{
+                  await context.read<AuthProvider>().playAsGuest();
+                  Navigator.pushReplacementNamed(context, GameRoute.mainMenu.path);
                 },
                 child: const Text('Play as Guest'),
               ),
