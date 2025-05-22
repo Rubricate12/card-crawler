@@ -50,6 +50,8 @@ class GameplayProvider extends ChangeNotifier {
 
   final Set<int> _unlockedAchievementIds = {};
 
+  int get score => _data.score;
+
   Future<void> init({GameData? gameData}) async {
     _state = Playing();
     _pendingStates.clear();
@@ -93,8 +95,6 @@ class GameplayProvider extends ChangeNotifier {
           _data.pickedCard = card;
           _data.removeCardFromDungeonField(index);
 
-          //bool cheat = true;
-
           for (var acc in _data.accessories) {
             if (acc.effect is AccessoryEffect){
               acc.effect.trigger(_data);
@@ -123,11 +123,11 @@ class GameplayProvider extends ChangeNotifier {
                   _data.graveyard.add(_data.weapon!);
                   _data.weapon = card;
                 }
-                _data.durability = 20;
+                _data.durability = 15;
               }
             case GameCardType.monster:
               {
-                card.value += _data.buff;
+                card.value += _data.tempBuff;
                 _data.buff = 0;
                 _data.tempBuff = 0;
 
@@ -151,8 +151,6 @@ class GameplayProvider extends ChangeNotifier {
 
                 _data.graveyard.add(card);
 
-                _data.score = card.value * 100;
-
                 _data.weapon?.value -= _data.tempBuff;
 
                 if (card.effect is OnKill) {
@@ -164,15 +162,13 @@ class GameplayProvider extends ChangeNotifier {
                   if (_data.cursedAxeCounter % 2 != 0){
                     _data.durability = 0;
                   } else {
-                    _data.durability = 20;
+                    _data.durability = 15;
                   }
                 }
 
                 if (_data.weapon?.effect is ArtemisBow){
                   _data.weapon?.effect.trigger(_data);
                 }
-
-                _data.score += (card.value * 100);
               }
             case GameCardType.accessory:
               {
@@ -195,6 +191,7 @@ class GameplayProvider extends ChangeNotifier {
 
             _queueState(Finished(isWin: true));
           }
+
           if (_data.health > 20) _data.health = 20;
 
           _data.buff = 0;
