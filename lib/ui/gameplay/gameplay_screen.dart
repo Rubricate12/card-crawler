@@ -93,14 +93,26 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       topContent: Center(
                         child: SizedBox(
                           width: double.infinity,
-                          height: 48.0 * uiScale,
+                          height: 72.0 * uiScale,
                           child: Center(
-                            child: Text(
-                              'ROUND: ${gameplay.round.toString()}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24.0 * uiScale,
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'ROUND: ${gameplay.round.toString()}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24.0 * uiScale,
+                                  ),
+                                ),
+                                Text(
+                                  'SCORE: ${gameplay.score.toString()}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0 * uiScale,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
