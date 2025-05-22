@@ -151,6 +151,8 @@ class GameplayProvider extends ChangeNotifier {
 
                 _data.graveyard.add(card);
 
+                _data.score = card.value * 100;
+
                 _data.weapon?.value -= _data.tempBuff;
 
                 if (card.effect is OnKill) {
